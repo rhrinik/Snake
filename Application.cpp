@@ -7,11 +7,10 @@ Application &Application::getInstance() {
 
 void Application::run() {
     gfx.createWindow();
-    while (!gfx.isWindowClosed()) {
+    game.init();
+    while (!gfx.isWindowClosed() && game.isRunning()) {
         gfx.processWindowEvents();
         game.run();
-        if (!game.isRunning())
-            break;
     }
     gfx.closeWindow();
 }
