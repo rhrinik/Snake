@@ -24,7 +24,7 @@ bool Game::makeListener() {
 }
 
 bool Game::connectPlayers() {
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 1; ++i) {
         auto client = std::make_unique<sf::TcpSocket>();
         if (listener.accept(*client) != sf::Socket::Done)
             return false;
