@@ -10,7 +10,7 @@ public:
     void closeWindow();
     void endFrame();
     [[nodiscard]] bool isWindowClosed() const;
-    void processWindowEvents();
+    void processEvents();
     //funkcia len na testovanie
     void drawCircle(int x, int y, int radius, int r, int g, int b) {
         sf::CircleShape shape(static_cast<float>(radius));

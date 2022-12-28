@@ -21,7 +21,7 @@ bool Graphics::isWindowClosed() const {
     return windowClosed;
 }
 
-void Graphics::processWindowEvents() {
+void Graphics::processEvents() {
     for (sf::Event event{};wnd->pollEvent(event);) {
         if (event.type == sf::Event::Closed) {
             wnd->close();
