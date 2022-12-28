@@ -7,8 +7,8 @@ Application &Application::getInstance() {
 
 void Application::run() {
     gfx.createWindow(windowWidth, windowHeight, std::string(windowTitle));
-    game.init();
-    while (!gfx.isWindowClosed() && game.isRunning()) {
+   // game.init();
+    while (gfx.isWindowOpen() /*&& game.isRunning()*/) {
         gfx.processWindowEvents();
         game.run();
     }

@@ -3,7 +3,7 @@ project(hadik)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(hadik main.cpp Application.cpp Application.h Graphics.cpp Graphics.h Game.cpp Game.h Stopwatch.cpp Stopwatch.h)
+add_executable(hadik main.cpp Application.cpp Application.h Graphics.cpp Graphics.h Game.cpp Game.h Stopwatch.cpp Stopwatch.h SnakePart.h Snake.cpp Snake.h Food.h Food.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "../SFML-2.5.1/lib/cmake/SFML")
