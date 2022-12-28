@@ -1,2 +1,4 @@
 # Snake 
-# test
+# TODO: 
+# Poriesit konstatnty
+# Vypis bodov, GameOver a StartMenu screeny

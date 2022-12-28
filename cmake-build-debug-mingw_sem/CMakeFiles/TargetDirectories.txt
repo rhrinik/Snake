@@ -1,3 +1,0 @@
-D:/3rocnik/5.Semester/POS/Erik/Semka/Snake/cmake-build-debug-mingw_sem/CMakeFiles/hadik.dir
-D:/3rocnik/5.Semester/POS/Erik/Semka/Snake/cmake-build-debug-mingw_sem/CMakeFiles/edit_cache.dir
-D:/3rocnik/5.Semester/POS/Erik/Semka/Snake/cmake-build-debug-mingw_sem/CMakeFiles/rebuild_cache.dir

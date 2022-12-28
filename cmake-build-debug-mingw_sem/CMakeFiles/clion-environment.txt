@@ -1,4 +1,0 @@
-ToolSet: w64 6.0 (local)@D:\3rocnik\5.Semester\POS\Semestralka\mingw32
-Options: 
-
-Options:-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2022.2.4/bin/ninja/win/ninja.exe
