@@ -6,7 +6,7 @@ class Graphics {
     bool windowClosed{true};
 public:
     void beginFrame();
-    void createWindow();
+    void createWindow(int width, int height, std::string const& title);
     void closeWindow();
     void endFrame();
     [[nodiscard]] bool isWindowClosed() const;

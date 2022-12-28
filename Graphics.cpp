@@ -4,9 +4,9 @@ void Graphics::beginFrame() {
     wnd->clear(sf::Color::Black);
 }
 
-void Graphics::createWindow() {
+void Graphics::createWindow(int width, int height, std::string const& title) {
     windowClosed = false;
-    wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "Snake");
+    wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title);
 }
 
 void Graphics::closeWindow() {
