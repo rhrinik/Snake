@@ -6,6 +6,6 @@ class Stopwatch {
     double totalTime{};
 public:
     double reset();
-    bool removeTime(int seconds);
+    [[nodiscard]] bool removeTime(int seconds);
 };
 
