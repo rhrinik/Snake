@@ -29,3 +29,10 @@ void Graphics::processEvents() {
         }
     }
 }
+
+void Graphics::drawImage(Image &image) {
+    image.sprite.setScale(
+            static_cast<float>(wnd->getSize().x) / image.sprite.getLocalBounds().width,
+            static_cast<float>(wnd->getSize().y) / image.sprite.getLocalBounds().height);
+    wnd->draw(image.sprite);
+}

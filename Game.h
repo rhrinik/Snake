@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "GameStatePlaying.h"
 #include "GameStateDummy.h"
+#include "GameStateMenu.h"
 
 class Game {
     Graphics& gfx;
@@ -15,6 +16,6 @@ public:
     [[nodiscard]] bool isRunning() const;
 
     std::vector<std::unique_ptr<GameState>> states;
-    GameState::States currentState{GameState::Playing};
+    GameState::States currentState{GameState::Menu};
     GameState::States previousState{GameState::Start};
 };

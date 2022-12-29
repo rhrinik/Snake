@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Color.h"
+#include "Image.h"
+#include "Text.h"
 
 class Graphics {
     std::unique_ptr<sf::RenderWindow> wnd;
@@ -24,4 +26,6 @@ public:
         sf::Vector2i position = sf::Mouse::getPosition(*wnd);
         return std::make_pair(position.x, position.y);
     }
+    void drawImage(Image &image);
+    void drawText(Text &text);
 };

@@ -3,7 +3,7 @@
 
 class GameState {
 public:
-    enum States { Start, End, Playing };
+    enum States { Start, End, Playing, Menu };
     [[nodiscard]] States run(Graphics &gfx);
     virtual void update();
     virtual void draw(Graphics &gfx);

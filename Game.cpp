@@ -13,6 +13,7 @@ bool Game::init() {
     states.emplace_back(std::make_unique<GameStateDummy>());
     states.emplace_back(std::make_unique<GameStateDummy>());
     states.emplace_back(std::make_unique<GameStatePlaying>());
+    states.emplace_back(std::make_unique<GameStateMenu>());
     return running = true;
 }
 
