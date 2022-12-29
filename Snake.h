@@ -44,7 +44,6 @@ public:
 public:
     explicit Snake(SnakePart startPart, std::tuple<int, int, int> RGB);
 
-    void addPart(SnakePart part);
 
     void popTail() { snakeParts.pop_front(); }
 
@@ -52,7 +51,7 @@ public:
 
     bool obstacleCollision();
 
-    SnakePart updatedPosition();
+    SnakePart updatePosition();
 
 };
 

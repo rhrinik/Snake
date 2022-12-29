@@ -17,9 +17,7 @@ bool Snake::selfCollision() {
     return false;
 }
 
-void Snake::addPart(SnakePart part) {
-    snakeParts.emplace_back(part);
-}
+
 
 bool Snake::obstacleCollision() {
     float xHead, yHead;
@@ -28,7 +26,7 @@ bool Snake::obstacleCollision() {
     return false;
 }
 
-SnakePart Snake::updatedPosition() {
+SnakePart Snake::updatePosition() {
     float x, y;
     std::pair<float, float> coords;
     std::tie(x, y) = snakeParts.back().getCoord();

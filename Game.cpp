@@ -17,12 +17,7 @@ void Game::update() {
     if (!stopwatch.removeTime(1))
         return;
 
-    //TODO: tiddy up
-    Directions dir = updateDirection(snake1);
-    snake1.setDirection(dir);
-
-
-    snake1.updatedPosition();
+    gfx.updateDirection(snake1);
 
     foodCollision(snake1, food1);
     gameOver(snake1);
@@ -53,15 +48,6 @@ bool Game::isRunning() const {
     return running;
 }
 
-
-Directions Game::updateDirection(const Snake &snake) { //TODO: move to Graphics or Snake or create new Class
-    auto dir = snake.getDirection();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && dir != Directions::RIGHT)return Directions::LEFT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && dir != Directions::LEFT)return Directions::RIGHT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && dir != Directions::DOWN)return Directions::UP;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && dir != Directions::UP) return Directions::DOWN;
-    return dir;
-}
 
 void Game::foodCollision(Snake &snake, Food &food) {
 

@@ -27,7 +27,6 @@ public:
 
     bool running{false};
 
-    Directions updateDirection(const Snake &snake);
 
     void foodCollision(Snake &snake, Food &food);
 

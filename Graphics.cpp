@@ -56,6 +56,15 @@ void Graphics::drawFood(Food food) {
 
 }
 
+Directions Graphics::updateDirection(Snake &snake) {
+    auto dir = snake.getDirection();
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && dir != Directions::RIGHT) dir= Directions::LEFT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && dir != Directions::LEFT)dir =  Directions::RIGHT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && dir != Directions::DOWN)dir =  Directions::UP;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && dir != Directions::UP) dir =  Directions::DOWN;
+    snake.setDirection(dir);
+    snake.updatePosition();
+}
 
 
