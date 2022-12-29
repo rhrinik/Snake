@@ -18,5 +18,5 @@ void GameStateMenu::drawState(Graphics &gfx) {
 }
 
 void GameStateMenu::initState() {
-    imageBackground.loadFromFile("../dark-grey-background-texture.jpg");
+    imageBackground.loadFromFile("../Client/Resources/dark-grey-background-texture.jpg");
 }
