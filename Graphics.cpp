@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Graphics.h"
 #include "Constants.h"
 

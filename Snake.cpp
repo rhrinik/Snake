@@ -26,7 +26,6 @@ bool Snake::selfCollision() {
 bool Snake::obstacleCollision() {
     float xHead, yHead;
     std::tie(xHead, yHead) = snakeParts.back().getCoord();
-    std::cout << xHead << "\n";
     if (xHead < 0 || yHead < 0 || xHead >= WINDOW_SIZE_WIDTH || yHead >= WINDOW_SIZE_HEIGHT) return true;
     return false;
 }

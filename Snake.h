@@ -21,7 +21,6 @@ private:
     std::deque<SnakePart> snakeParts;
     Directions direction = Directions::RIGHT;
 public:
-    [[nodiscard]] const std::tuple<int, int, int> &getRgb() const;
 
     [[nodiscard]] SnakePart &getSnakeHead() const {
         return const_cast<SnakePart &>(snakeParts.back());
