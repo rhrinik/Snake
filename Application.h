@@ -7,8 +7,6 @@ class Application {
     Graphics gfx;
     Game game;
     bool isRunning{true};
-    static constexpr std::size_t windowWidth = 800;
-    static constexpr std::size_t windowHeight = 600;
     static constexpr std::string_view windowTitle = "Snake";
 public:
     static Application& getInstance();

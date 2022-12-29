@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "Stopwatch.h"
 #include "Food.h"
+#include "Constants.h"
 #include <SFML/Network.hpp>
 #include <iostream>
 #include <thread>
@@ -12,8 +13,8 @@
 
 class Game {
     Graphics &gfx;
-    Snake snake1 = Snake(SnakePart(std::make_pair(400, 300)), std::make_tuple(0, 255, 0));
-    Food food1 = Food(std::make_pair(100, 100));;
+    Snake snake1 = Snake(SnakePart(std::make_pair(SNAKE_STARTING_POS_X, SNAKE_STARTING_POS_Y)));
+    Food food1 = Food(std::make_pair(FOOD_STARTING_POS_X, FOOD_STARTING_POS_Y));
 public:
     explicit Game(Graphics &gfx) : gfx(gfx) {}
 

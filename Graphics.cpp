@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Graphics.h"
+#include "Constants.h"
 
 void Graphics::beginFrame() {
     wnd->clear(sf::Color::Black);
@@ -34,12 +35,8 @@ void Graphics::processWindowEvents() {
 
 void Graphics::drawSnake(const Snake &snake) {
     auto snakeBody = snake.getSnakeParts();
-    sf::RectangleShape rectangleShape(sf::Vector2f(snake.PART_SIZE, snake.PART_SIZE));
-    int R;
-    int G;
-    int B;
-    std::tie(R, G, B) = snake.RGB;
-    rectangleShape.setFillColor(sf::Color(R, G, B));
+    sf::RectangleShape rectangleShape(sf::Vector2f(SNAKE_PART_SIZE, SNAKE_PART_SIZE));
+    rectangleShape.setFillColor(sf::Color(SNAKE_COLOR_R, SNAKE_COLOR_G, SNAKE_COLOR_B));
     for (auto snakePart: snakeBody) {
         auto coord = snakePart.getCoord();
         rectangleShape.setPosition(coord.first, coord.second);
@@ -47,9 +44,9 @@ void Graphics::drawSnake(const Snake &snake) {
     }
 }
 
-void Graphics::drawFood(Food food) {
-    sf::CircleShape shape(10);
-    shape.setFillColor(sf::Color::Red);
+void Graphics::drawFood(Food &food) {
+    sf::CircleShape shape(FOOD_SIZE);
+    shape.setFillColor(sf::Color(FOOD_COLOR_R,FOOD_COLOR_G,FOOD_COLOR_B));
     shape.setPosition(food.getCoord().first, food.getCoord().second);
     wnd->draw(shape);
 
@@ -59,10 +56,10 @@ void Graphics::drawFood(Food food) {
 Directions Graphics::updateDirection(Snake &snake) {
     auto dir = snake.getDirection();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && dir != Directions::RIGHT) dir= Directions::LEFT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && dir != Directions::LEFT)dir =  Directions::RIGHT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && dir != Directions::DOWN)dir =  Directions::UP;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && dir != Directions::UP) dir =  Directions::DOWN;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && dir != Directions::RIGHT) dir = Directions::LEFT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && dir != Directions::LEFT)dir = Directions::RIGHT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && dir != Directions::DOWN)dir = Directions::UP;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && dir != Directions::UP) dir = Directions::DOWN;
     snake.setDirection(dir);
     snake.updatePosition();
 }

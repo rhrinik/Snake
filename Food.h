@@ -4,14 +4,15 @@
 
 
 #include <utility>
+#include <tuple>
 
 class Food {
 
 public:
     explicit Food(std::pair<float, float> coord) : coord(std::move(coord)) {}
-private:
+
 public:
-    [[nodiscard]] const std::pair<float, float> &getCoord() const {return coord;}
+    [[nodiscard]] inline const std::pair<float, float> &getCoord() const {return coord;}
 
     void generateFood();
 

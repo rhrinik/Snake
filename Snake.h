@@ -21,11 +21,12 @@ private:
     std::deque<SnakePart> snakeParts;
     Directions direction = Directions::RIGHT;
 public:
+    [[nodiscard]] const std::tuple<int, int, int> &getRgb() const;
+
     [[nodiscard]] SnakePart &getSnakeHead() const {
         return const_cast<SnakePart &>(snakeParts.back());
     }
 
-public:
     [[nodiscard]] Directions getDirection() const {
         return direction;
     }
@@ -34,15 +35,9 @@ public:
         this->direction = newDirection;
     }
 
-public:
+    [[nodiscard]] inline const std::deque<SnakePart> &getSnakeParts() const { return snakeParts; }
 
-    const float PART_SIZE = 20;
-    const std::tuple<int, int, int> RGB;
-
-    [[nodiscard]] const std::deque<SnakePart> &getSnakeParts() const { return snakeParts; }
-
-public:
-    explicit Snake(SnakePart startPart, std::tuple<int, int, int> RGB);
+    explicit Snake(SnakePart startPart);
 
 
     void popTail() { snakeParts.pop_front(); }

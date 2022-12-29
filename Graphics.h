@@ -22,7 +22,7 @@ public:
 
     void drawSnake(const Snake &snake);
 
-    void drawFood(Food food);
+    void drawFood(Food &food);
 
     Directions updateDirection(Snake &snake);
 };
