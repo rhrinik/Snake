@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Color.h"
 
 class Graphics {
     std::unique_ptr<sf::RenderWindow> wnd;
@@ -12,10 +13,10 @@ public:
     [[nodiscard]] bool isWindowClosed() const;
     void processEvents();
     //funkcia len na testovanie
-    void drawCircle(int x, int y, int radius, int r, int g, int b) {
+    void drawCircle(std::pair<int,int> topLeftPoint, int radius, Color color) {
         sf::CircleShape shape(static_cast<float>(radius));
-        shape.setPosition(static_cast<float>(x), static_cast<float>(y));
-        shape.setFillColor(sf::Color(r, g, b));
+        shape.setPosition(static_cast<float>(topLeftPoint.first), static_cast<float>(topLeftPoint.second));
+        shape.setFillColor(sf::Color(color.r(), color.g(), color.b()));
         wnd->draw(shape);
     }
     //funkcia len na testovanie
