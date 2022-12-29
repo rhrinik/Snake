@@ -39,7 +39,7 @@ void Game::receivePlayerInput(std::unique_ptr<sf::TcpSocket> client) {
         std::string s;
 
         sf::Packet packet;
-        if (client->receive(packet) == sf::Socket::Status::Disconnected) break;
+        if (client->receive(packet) ==sad sf::Socket::Status::Disconnected) break;
         packet >> s >> x;
         std::cout << s << x << std::endl;
     }
