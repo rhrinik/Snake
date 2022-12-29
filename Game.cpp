@@ -17,18 +17,15 @@ void Game::update() {
     if (!stopwatch.removeTime(1))
         return;
 
+    //TODO: tiddy up
     Directions dir = updateDirection(snake1);
     snake1.setDirection(dir);
-    auto head = snake1.getSnakeHead();
-    auto part = updatedPosition( head, dir, snake1.PART_SIZE);
 
 
+    snake1.updatedPosition();
 
-    snake1.addPart(part);
-
-    foodCollision(head, food1)?food1.generateFood():snake1.popTail();
-
-    if(obstacleCollision(snake1.getSnakeHead()) || snake1.selfCollision()) gameOver();
+    foodCollision(snake1, food1);
+    gameOver(snake1);
 
 
 //
@@ -57,46 +54,24 @@ bool Game::isRunning() const {
 }
 
 
-Directions Game::updateDirection(const Snake& snake) {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && snake.getDirection() != Directions::RIGHT)  return Directions::LEFT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && snake.getDirection() != Directions::LEFT) return Directions::RIGHT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && snake.getDirection() != Directions::DOWN) return Directions::UP;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && snake.getDirection() != Directions::UP)  return Directions::DOWN;
-    return snake.getDirection();
+Directions Game::updateDirection(const Snake &snake) { //TODO: move to Graphics or Snake or create new Class
+    auto dir = snake.getDirection();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && dir != Directions::RIGHT)return Directions::LEFT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && dir != Directions::LEFT)return Directions::RIGHT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && dir != Directions::DOWN)return Directions::UP;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && dir != Directions::UP) return Directions::DOWN;
+    return dir;
 }
 
-SnakePart Game::updatedPosition(SnakePart& snakeHead, Directions dir, float partSize){
-    float x,y;
-    std::pair<float,float> coords;
-    std::tie(x,y) = snakeHead.getCoord();
-    if(dir == Directions::UP)  coords = std::make_pair(x,y - partSize);
-    if(dir == Directions::DOWN) coords = std::make_pair(x,y + partSize);
-    if(dir == Directions::LEFT) coords = std::make_pair(x - partSize,y );
-    if(dir == Directions::RIGHT)coords = std::make_pair(x +  partSize,y );
-    snakeHead = SnakePart(coords);
-    return SnakePart(coords);
+void Game::foodCollision(Snake &snake, Food &food) {
 
+    snake.getSnakeHead().getCoord() == food.getCoord() ? food.generateFood() : snake.popTail();
 }
 
-
-
-bool Game::foodCollision(SnakePart &snakeHead, Food &food) {
-    float xHead,yHead, xFood, yFood;
-    std::tie(xHead,yHead) = snakeHead.getCoord();
-    std::tie(xFood,yFood) = food.getCoord();
-
-    return xHead == xFood && yHead == yFood;
-}
-
-bool Game::obstacleCollision(SnakePart &snakeHead) {
-    float xHead,yHead;
-    std::tie(xHead,yHead) = snakeHead.getCoord();
-    if (xHead < 0 || yHead < 0 || xHead > 800 || yHead > 600) return true;
-    return false;
-}
-
-void Game::gameOver() {
-    std::cout << "OUCH\n";
-    gfx.closeWindow();
+void Game::gameOver(Snake &snake) {
+    if (snake.obstacleCollision() || snake.selfCollision()) {
+        std::cout << "OUCH\n";
+        gfx.closeWindow();
+    }
 }
 

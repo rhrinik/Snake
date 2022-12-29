@@ -35,12 +35,14 @@ void Graphics::processWindowEvents() {
 void Graphics::drawSnake(const Snake &snake) {
     auto snakeBody = snake.getSnakeParts();
     sf::RectangleShape rectangleShape(sf::Vector2f(snake.PART_SIZE, snake.PART_SIZE));
-    int R; int G; int B;
-    std::tie(R,G,B) = snake.RGB;
-    rectangleShape.setFillColor(sf::Color(R,G,B));
-    for (auto snakePart : snakeBody) {
+    int R;
+    int G;
+    int B;
+    std::tie(R, G, B) = snake.RGB;
+    rectangleShape.setFillColor(sf::Color(R, G, B));
+    for (auto snakePart: snakeBody) {
         auto coord = snakePart.getCoord();
-        rectangleShape.setPosition(coord.first,coord.second);
+        rectangleShape.setPosition(coord.first, coord.second);
         wnd->draw(rectangleShape);
     }
 }
@@ -48,10 +50,12 @@ void Graphics::drawSnake(const Snake &snake) {
 void Graphics::drawFood(Food food) {
     sf::CircleShape shape(10);
     shape.setFillColor(sf::Color::Red);
-    shape.setPosition(food.getCoord().first,food.getCoord().second);
+    shape.setPosition(food.getCoord().first, food.getCoord().second);
     wnd->draw(shape);
 
 
 }
+
+
 
 
