@@ -1,10 +1,10 @@
 #include "GameStateDummy.h"
 
-GameState::States GameStateDummy::runState(Graphics &gfx) {
+GameState::States GameStateDummy::runState(Window &wnd, Graphics &gfx) {
     return End;
 }
 
-void GameStateDummy::updateState() {
+void GameStateDummy::updateState(Window &wnd) {
 }
 
 void GameStateDummy::drawState(Graphics &gfx) {

@@ -5,7 +5,7 @@ void Game::run() {
         if (currentState != previousState)
             states[static_cast<int>(currentState)]->init();
         previousState = currentState;
-        currentState = states[static_cast<int>(currentState)]->run(gfx);
+        currentState = states[static_cast<int>(currentState)]->run(wnd, gfx);
     }
 }
 

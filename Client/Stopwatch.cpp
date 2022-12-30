@@ -9,7 +9,7 @@ double Stopwatch::reset() {
     return elapsed.count();
 }
 
-bool Stopwatch::removeTime(int seconds) {
+bool Stopwatch::removeTime(double seconds) {
     totalTime += reset();
     if (totalTime < seconds)
         return false;

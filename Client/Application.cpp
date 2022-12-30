@@ -6,10 +6,10 @@ Application &Application::getInstance() {
 }
 
 void Application::run() {
-    gfx.createWindow(windowWidth, windowHeight, std::string(windowTitle));
+    wnd.createWindow(windowWidth, windowHeight, std::string(windowTitle));
 
     game.init(); //check for errors
     game.run();
 
-    gfx.closeWindow();
+    wnd.closeWindow();
 }

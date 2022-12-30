@@ -7,8 +7,9 @@
 
 class Game {
     Graphics& gfx;
+    Window &wnd;
 public:
-    explicit Game(Graphics &gfx) : gfx(gfx) {}
+    explicit Game(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx) {}
     void run();
     bool init();
 
@@ -16,6 +17,6 @@ public:
     [[nodiscard]] bool isRunning() const;
 
     std::vector<std::unique_ptr<GameState>> states;
-    GameState::States currentState{GameState::Menu};
+    GameState::States currentState{GameState::Playing};
     GameState::States previousState{GameState::Start};
 };

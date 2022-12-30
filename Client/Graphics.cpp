@@ -1,38 +1,20 @@
 #include "Graphics.h"
 
 void Graphics::beginFrame() {
-    wnd->clear(sf::Color::Black);
-}
-
-void Graphics::createWindow(int width, int height, std::string const& title) {
-    windowClosed = false;
-    wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title);
-}
-
-void Graphics::closeWindow() {
-    wnd->close();
+    wnd.wnd->clear(sf::Color::Black);
 }
 
 void Graphics::endFrame() {
-    wnd->display();
-}
-
-bool Graphics::isWindowClosed() const {
-    return windowClosed;
-}
-
-void Graphics::processEvents() {
-    for (sf::Event event{};wnd->pollEvent(event);) {
-        if (event.type == sf::Event::Closed) {
-            wnd->close();
-            windowClosed = true;
-        }
-    }
+    wnd.wnd->display();
 }
 
 void Graphics::drawImage(Image &image) {
     image.sprite.setScale(
-            static_cast<float>(wnd->getSize().x) / image.sprite.getLocalBounds().width,
-            static_cast<float>(wnd->getSize().y) / image.sprite.getLocalBounds().height);
-    wnd->draw(image.sprite);
+            static_cast<float>(wnd.wnd->getSize().x) / image.sprite.getLocalBounds().width,
+            static_cast<float>(wnd.wnd->getSize().y) / image.sprite.getLocalBounds().height);
+    wnd.wnd->draw(image.sprite);
+}
+
+void Graphics::drawText(Text &text) {
+    wnd.wnd->draw(text.text);
 }
