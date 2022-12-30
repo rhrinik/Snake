@@ -1,6 +1,6 @@
 #include "GameStateDummy.h"
 
-GameState::States GameStateDummy::runState() {
+GameState::States GameStateDummy::runState(States previous) {
     return End;
 }
 

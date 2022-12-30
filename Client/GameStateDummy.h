@@ -2,7 +2,7 @@
 #include "GameState.h"
 
 class GameStateDummy : public GameState {
-    [[nodiscard]] States runState() override;
+    [[nodiscard]] States runState(States previous) override;
     void updateState() override;
     void drawState() override;
     void initState() override;

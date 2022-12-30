@@ -2,10 +2,9 @@
 
 void Game::run() {
     while (currentState != GameState::End) {
-        if (currentState != previousState)
-            states[static_cast<int>(currentState)]->init();
+        auto const prev = previousState;
         previousState = currentState;
-        currentState = states[static_cast<int>(currentState)]->run();
+        currentState = states[static_cast<int>(currentState)]->run(prev);
     }
 }
 

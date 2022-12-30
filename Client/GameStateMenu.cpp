@@ -1,8 +1,10 @@
 #include "GameStateMenu.h"
 
-GameState::States GameStateMenu::runState() {
+GameState::States GameStateMenu::runState(States previous) {
     if (wnd.isWindowClosed())
         return GameState::End;
+    if (previous == States::Start)
+        init();
 
     update();
     draw();

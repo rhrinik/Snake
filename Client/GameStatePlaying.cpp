@@ -1,8 +1,10 @@
 #include "GameStatePlaying.h"
 
-GameState::States GameStatePlaying::runState() {
+GameState::States GameStatePlaying::runState(States previous) {
     if (wnd.isWindowClosed())
         return GameState::End;
+    if (previous != States::Playing)
+        init();
 
     update();
     draw();

@@ -1,8 +1,8 @@
 #include "GameState.h"
 
-GameState::States GameState::run() {
+GameState::States GameState::run(States previous) {
     wnd.processEvents();
-    return runState();
+    return runState(previous);
 }
 
 void GameState::update() {

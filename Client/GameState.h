@@ -5,13 +5,13 @@ class GameState {
 public:
     GameState(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx) {}
     enum States { Start, End, Playing, Menu };
-    [[nodiscard]] States run();
+    [[nodiscard]] States run(States previous);
     virtual void update();
     virtual void draw();
     virtual void init();
     virtual ~GameState() = default;
 private:
-    [[nodiscard]] virtual States runState() = 0;
+    [[nodiscard]] virtual States runState(States previous) = 0;
     virtual void updateState() = 0;
     virtual void drawState() = 0;
     virtual void initState() = 0;

@@ -6,7 +6,7 @@
 #include "Utilities.h"
 
 class GameStateMenu : public GameState {
-    States runState() override;
+    States runState(States previous) override;
     void updateState() override;
     void drawState() override;
     void initState() override;
