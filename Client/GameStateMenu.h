@@ -11,8 +11,10 @@ class GameStateMenu : public GameState {
     void drawState() override;
     void initState() override;
     Image imageBackground;
-    Text menuTitle;
     Font font;
+    Text title;
+    Text play;
+    Text exit;
 public:
     GameStateMenu(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 };
