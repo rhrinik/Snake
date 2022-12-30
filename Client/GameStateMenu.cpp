@@ -21,8 +21,12 @@ void GameStateMenu::drawState() {
 void GameStateMenu::initState() {
     imageBackground.loadFromFile("../Client/Resources/dark-grey-background-texture.jpg");
 
-    menuTitle.loadFontFromFile("../Client/Resources/font.otf");
+    font.loadFontFromFile("../Client/Resources/font.otf");
+
+    menuTitle.setFont(font);
     menuTitle.setText("SNAKE");
-    menuTitle.setPosition({20,20});
-    menuTitle.setSize(40);
+    menuTitle.setSize(300);
+    std::pair<int,int> menuTitlePosition = (wnd.getSize() - menuTitle.getSize())/2;
+    menuTitlePosition.second -= wnd.getSize().second/4;
+    menuTitle.setPosition(menuTitlePosition);
 }

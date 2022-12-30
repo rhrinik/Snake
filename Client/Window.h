@@ -16,6 +16,9 @@ public:
         windowClosed = false;
         wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title);
     }
+    [[nodiscard]] std::pair<int,int> getSize() const {
+        return {wnd->getSize().x,wnd->getSize().y};
+    }
     [[nodiscard]] bool const* getKeys() const {
         return keys;
     }
