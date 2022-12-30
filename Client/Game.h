@@ -17,6 +17,6 @@ public:
     [[nodiscard]] bool isRunning() const;
 
     std::vector<std::unique_ptr<GameState>> states;
-    GameState::States currentState{GameState::Playing};
+    GameState::States currentState{GameState::Menu};
     GameState::States previousState{GameState::Start};
 };

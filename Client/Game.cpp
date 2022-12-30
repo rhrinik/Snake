@@ -5,15 +5,15 @@ void Game::run() {
         if (currentState != previousState)
             states[static_cast<int>(currentState)]->init();
         previousState = currentState;
-        currentState = states[static_cast<int>(currentState)]->run(wnd, gfx);
+        currentState = states[static_cast<int>(currentState)]->run();
     }
 }
 
 bool Game::init() {
-    states.emplace_back(std::make_unique<GameStateDummy>());
-    states.emplace_back(std::make_unique<GameStateDummy>());
-    states.emplace_back(std::make_unique<GameStatePlaying>());
-    states.emplace_back(std::make_unique<GameStateMenu>());
+    states.emplace_back(std::make_unique<GameStateDummy>(wnd,gfx));
+    states.emplace_back(std::make_unique<GameStateDummy>(wnd,gfx));
+    states.emplace_back(std::make_unique<GameStatePlaying>(wnd,gfx));
+    states.emplace_back(std::make_unique<GameStateMenu>(wnd,gfx));
     return running = true;
 }
 

@@ -7,5 +7,8 @@ class Text {
     sf::Text text;
 public:
     Text() = default;
-    bool loadFromFile(std::string const& path);
+    bool loadFontFromFile(std::string const& path);
+    void setText(std::string const& str);
+    void setSize(std::size_t size);
+    void setPosition(std::pair<int,int> pos);
 };

@@ -7,13 +7,15 @@
 #include <iostream>
 
 class GameStatePlaying : public GameState {
-    [[nodiscard]] States runState(Window &wnd, Graphics &gfx) override;
-    void updateState(Window &wnd) override;
-    void drawState(Graphics &gfx) override;
+    [[nodiscard]] States runState() override;
+    void updateState() override;
+    void drawState() override;
     void initState() override;
     Stopwatch stopwatchGameSpeed;
     Stopwatch stopwatch;
     sf::TcpSocket server;
     Snake snake{{160,160}};
     Food food{{320,160}};
+public:
+    GameStatePlaying(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 };

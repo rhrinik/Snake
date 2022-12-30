@@ -5,10 +5,12 @@
 #include <vector>
 
 class GameStateMenu : public GameState {
-    States runState(Window &wnd, Graphics &gfx) override;
-    void updateState(Window &wnd) override;
-    void drawState(Graphics &gfx) override;
+    States runState() override;
+    void updateState() override;
+    void drawState() override;
     void initState() override;
     Image imageBackground;
     Text menuTitle;
+public:
+    GameStateMenu(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 };

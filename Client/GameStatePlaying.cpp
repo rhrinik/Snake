@@ -1,16 +1,16 @@
 #include "GameStatePlaying.h"
 
-GameState::States GameStatePlaying::runState(Window &wnd, Graphics &gfx) {
+GameState::States GameStatePlaying::runState() {
     if (wnd.isWindowClosed())
         return GameState::End;
 
-    update(wnd);
-    draw(gfx);
+    update();
+    draw();
 
     return Playing;
 }
 
-void GameStatePlaying::updateState(Window &wnd) {
+void GameStatePlaying::updateState() {
     auto it = std::find(wnd.getKeys(), wnd.getKeys() + Window::Keys::NumKeys, true);
     if (it != wnd.getKeys() + Window::Keys::NumKeys)
         snake.setDirection(static_cast<Snake::Direction>(std::distance(wnd.getKeys(),it)));
@@ -31,7 +31,7 @@ void GameStatePlaying::updateState(Window &wnd) {
     std::cout << "Message sent" << std::endl;*/
 }
 
-void GameStatePlaying::drawState(Graphics &gfx) {
+void GameStatePlaying::drawState() {
     snake.draw(gfx);
     food.draw(gfx);
     //gfx.drawCircle(gfx.getMouseCoord().first, gfx.getMouseCoord().second, 20, Color(100, 250, 50));

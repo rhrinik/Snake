@@ -1,24 +1,28 @@
 #include "GameStateMenu.h"
 
-GameState::States GameStateMenu::runState(Window &wnd, Graphics &gfx) {
+GameState::States GameStateMenu::runState() {
     if (wnd.isWindowClosed())
         return GameState::End;
 
-    update(wnd);
-    draw(gfx);
+    update();
+    draw();
 
     return Menu;
 }
 
-void GameStateMenu::updateState(Window &wnd) {
+void GameStateMenu::updateState() {
 }
 
-void GameStateMenu::drawState(Graphics &gfx) {
+void GameStateMenu::drawState() {
     gfx.drawImage(imageBackground);
     gfx.drawText(menuTitle);
 }
 
 void GameStateMenu::initState() {
     imageBackground.loadFromFile("../Client/Resources/dark-grey-background-texture.jpg");
-    menuTitle.loadFromFile("../Client/Resources/font.otf");
+
+    menuTitle.loadFontFromFile("../Client/Resources/font.otf");
+    menuTitle.setText("SNAKE");
+    menuTitle.setPosition({20,20});
+    menuTitle.setSize(40);
 }

@@ -1,17 +1,17 @@
 #include "GameState.h"
 
-GameState::States GameState::run(Window &wnd, Graphics &gfx) {
+GameState::States GameState::run() {
     wnd.processEvents();
-    return runState(wnd, gfx);
+    return runState();
 }
 
-void GameState::update(Window &wnd) {
-    updateState(wnd);
+void GameState::update() {
+    updateState();
 }
 
-void GameState::draw(Graphics &gfx) {
+void GameState::draw() {
     gfx.beginFrame();
-    drawState(gfx);
+    drawState();
     gfx.endFrame();
 }
 

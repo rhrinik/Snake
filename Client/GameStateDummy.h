@@ -2,9 +2,10 @@
 #include "GameState.h"
 
 class GameStateDummy : public GameState {
-private:
-    [[nodiscard]] States runState(Window &wnd, Graphics &gfx) override;
-    void updateState(Window &wnd) override;
-    void drawState(Graphics &gfx) override;
+    [[nodiscard]] States runState() override;
+    void updateState() override;
+    void drawState() override;
     void initState() override;
+public:
+    GameStateDummy(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 };
