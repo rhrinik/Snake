@@ -18,27 +18,25 @@ void Window::processEvents() {
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Up:
-                        keys[Up] = true;
-                    case sf::Keyboard::Down:
-                        keys[Down] = true;
-                    case sf::Keyboard::Left:
-                        keys[Left] = true;
-                    case sf::Keyboard::Right:
-                        keys[Right] = true;
-                    default:
+                        for (auto& k : registeredObjects)
+                            k.get().onKeyUp();
                         break;
-                }
-                break;
-            case sf::Event::KeyReleased:
-                switch (event.key.code) {
-                    case sf::Keyboard::Up:
-                        keys[Up] = false;
                     case sf::Keyboard::Down:
-                        keys[Down] = false;
+                        for (auto& k : registeredObjects)
+                            k.get().onKeyDown();
+                        break;
                     case sf::Keyboard::Left:
-                        keys[Left] = false;
+                        for (auto& k : registeredObjects)
+                            k.get().onKeyLeft();
+                        break;
                     case sf::Keyboard::Right:
-                        keys[Right] = false;
+                        for (auto& k : registeredObjects)
+                            k.get().onKeyRight();
+                        break;
+                    case sf::Keyboard::Enter:
+                        for (auto& k : registeredObjects)
+                            k.get().onKeyEnter();
+                        break;
                     default:
                         break;
                 }
@@ -47,4 +45,8 @@ void Window::processEvents() {
                 break;
         }
     }
+}
+
+void Window::registerObject(KeyPresses &k) {
+    registeredObjects.emplace_back(k);
 }

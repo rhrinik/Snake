@@ -18,4 +18,10 @@ class GameStatePlaying : public GameState {
     Food food{{320,160}};
 public:
     GameStatePlaying(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+
+    void onKeyUp() override;
+    void onKeyDown() override;
+    void onKeyLeft() override;
+    void onKeyRight() override;
+    void onKeyEnter() override;
 };

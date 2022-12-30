@@ -1,15 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "KeyPresses.h"
 
 class Window {
 public:
     friend class Graphics;
-    enum Keys { Up, Down, Left, Right, NumKeys };
 private:
-    bool keys[NumKeys]{};
     std::unique_ptr<sf::RenderWindow> wnd;
     bool windowClosed{true};
+    std::vector<std::reference_wrapper<KeyPresses>> registeredObjects;
 public:
     Window() = default;
     void createWindow(int width, int height, std::string const& title) {
@@ -19,10 +19,8 @@ public:
     [[nodiscard]] std::pair<int,int> getSize() const {
         return {wnd->getSize().x,wnd->getSize().y};
     }
-    [[nodiscard]] bool const* getKeys() const {
-        return keys;
-    }
     void closeWindow();
     [[nodiscard]] bool isWindowClosed() const;
     void processEvents();
+    void registerObject(KeyPresses& k);
 };

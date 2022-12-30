@@ -13,9 +13,9 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 void GameStatePlaying::updateState() {
-    auto it = std::find(wnd.getKeys(), wnd.getKeys() + Window::Keys::NumKeys, true);
+    /*auto it = std::find(wnd.getKeys(), wnd.getKeys() + Window::Keys::NumKeys, true);
     if (it != wnd.getKeys() + Window::Keys::NumKeys)
-        snake.setDirection(static_cast<Snake::Direction>(std::distance(wnd.getKeys(),it)));
+        snake.setDirection(static_cast<Snake::Direction>(std::distance(wnd.getKeys(),it)));*/
 
     if (stopwatchGameSpeed.removeTime(0.1))
         snake.move();
@@ -44,4 +44,24 @@ void GameStatePlaying::initState() {
     //if (status != sf::Socket::Done)
     stopwatchGameSpeed.reset();
     stopwatch.reset();
+    wnd.registerObject(*this);
+}
+
+void GameStatePlaying::onKeyUp() {
+    snake.setDirection(Snake::Direction::Up);
+}
+
+void GameStatePlaying::onKeyDown() {
+    snake.setDirection(Snake::Direction::Down);
+}
+
+void GameStatePlaying::onKeyLeft() {
+    snake.setDirection(Snake::Direction::Left);
+}
+
+void GameStatePlaying::onKeyRight() {
+    snake.setDirection(Snake::Direction::Right);
+}
+
+void GameStatePlaying::onKeyEnter() {
 }

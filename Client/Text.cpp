@@ -19,3 +19,15 @@ std::pair<int, int> Text::getSize() const {
 void Text::setFont(const Font& newFont) {
     text.setFont(newFont.font);
 }
+
+std::pair<int, int> Text::getPosition() const {
+    return {text.getGlobalBounds().left,text.getGlobalBounds().top};
+}
+
+void Text::setOutlineColor(Color color) {
+    text.setOutlineColor({color.r(),color.g(),color.b()});
+}
+
+void Text::setOutlineSize(std::size_t size) {
+    text.setOutlineThickness(static_cast<float>(size));
+}

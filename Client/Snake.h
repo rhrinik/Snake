@@ -31,6 +31,9 @@ public:
         segments.emplace_back(segments.back());
     }
     void setDirection(Direction newDirection) {
+        if (segments.size() > 2
+        && directionMoves.at(direction) + directionMoves.at(newDirection) == std::make_pair(0,0))
+            return;
         direction = newDirection;
     }
     [[nodiscard]] std::vector<std::pair<int, int>> const& getSegments() const {

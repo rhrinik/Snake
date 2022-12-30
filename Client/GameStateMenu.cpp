@@ -5,6 +5,8 @@ GameState::States GameStateMenu::runState(States previous) {
         return GameState::End;
     if (previous == States::Start)
         init();
+    if (selectionConfirmed)
+        return Playing;
 
     update();
     draw();
@@ -20,6 +22,13 @@ void GameStateMenu::drawState() {
     gfx.drawText(title);
     gfx.drawText(play);
     gfx.drawText(exit);
+    if (selected == Play) {
+        play.setOutlineSize(10);
+        exit.setOutlineSize(0);
+    } else {
+        play.setOutlineSize(0);
+        exit.setOutlineSize(10);
+    }
 }
 
 void GameStateMenu::initState() {
@@ -39,6 +48,7 @@ void GameStateMenu::initState() {
     play.setSize(150);
     std::pair<int,int> playPosition = (wnd.getSize() - play.getSize()) / 2;
     play.setPosition(playPosition);
+    play.setOutlineColor(Color(70,70,70));
 
     exit.setFont(font);
     exit.setText("Exit");
@@ -46,4 +56,19 @@ void GameStateMenu::initState() {
     std::pair<int,int> exitPosition = (wnd.getSize() - exit.getSize()) / 2;
     exitPosition.second += wnd.getSize().second/8;
     exit.setPosition(exitPosition);
+    exit.setOutlineColor(Color(70,70,70));
+
+    wnd.registerObject(*this);
+}
+
+void GameStateMenu::onKeyUp() {
+    selected = Play;
+}
+
+void GameStateMenu::onKeyDown() {
+    selected = Exit;
+}
+
+void GameStateMenu::onKeyEnter() {
+    selectionConfirmed = true;
 }

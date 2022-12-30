@@ -1,7 +1,8 @@
 #pragma once
 #include "Graphics.h"
+#include "KeyPresses.h"
 
-class GameState {
+class GameState : public KeyPresses {
 public:
     GameState(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx) {}
     enum States { Start, End, Playing, Menu };
@@ -9,7 +10,6 @@ public:
     virtual void update();
     virtual void draw();
     virtual void init();
-    virtual ~GameState() = default;
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
     virtual void updateState() = 0;

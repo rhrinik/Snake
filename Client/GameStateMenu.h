@@ -15,6 +15,11 @@ class GameStateMenu : public GameState {
     Text title;
     Text play;
     Text exit;
+    enum Selected { Play, Exit } selected{Play};
+    bool selectionConfirmed{false};
 public:
+    void onKeyUp() override;
+    void onKeyDown() override;
+    void onKeyEnter() override;
     GameStateMenu(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 };
