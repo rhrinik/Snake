@@ -1,8 +1,8 @@
 #pragma once
 #include <utility>
 #include <random>
-#include "Graphics.h"
-#include "Utilities.h"
+#include "../Display/Graphics.h"
+#include "../Utility/Utilities.h"
 
 class Food {
     static int constexpr foodSize = 40;

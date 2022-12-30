@@ -1,9 +1,9 @@
 #pragma once
-#include "Graphics.h"
-#include "GameState.h"
-#include "GameStatePlaying.h"
-#include "GameStateDummy.h"
-#include "GameStateMenu.h"
+#include "Display/Graphics.h"
+#include "GameStates/GameState.h"
+#include "GameStates/GameStatePlaying.h"
+#include "GameStates/GameStateDummy.h"
+#include "GameStates/GameStateMenu.h"
 
 class Game {
     Graphics& gfx;

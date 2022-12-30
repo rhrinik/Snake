@@ -1,6 +1,6 @@
 #pragma once
-#include "Graphics.h"
-#include "KeyPresses.h"
+#include "../Display/Graphics.h"
+#include "../Utility/KeyPresses.h"
 
 class GameState : public KeyPresses {
 public:

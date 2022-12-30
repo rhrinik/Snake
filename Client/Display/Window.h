@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "KeyPresses.h"
+#include "../Utility/KeyPresses.h"
 
 class Window {
 public:

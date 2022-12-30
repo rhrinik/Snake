@@ -1,5 +1,5 @@
 #pragma once
-#include "Graphics.h"
+#include "Display/Graphics.h"
 #include "Game.h"
 
 class Application {

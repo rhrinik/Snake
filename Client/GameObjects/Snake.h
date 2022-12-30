@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "Graphics.h"
+#include "../Display/Graphics.h"
 #include <algorithm>
-#include "Utilities.h"
+#include "../Utility/Utilities.h"
 
 class Snake {
 public:

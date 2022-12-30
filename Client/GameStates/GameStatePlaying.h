@@ -1,8 +1,8 @@
 #pragma once
 #include "GameState.h"
-#include "Stopwatch.h"
-#include "Snake.h"
-#include "Food.h"
+#include "../Utility/Stopwatch.h"
+#include "../GameObjects/Snake.h"
+#include "../GameObjects/Food.h"
 #include <SFML/Network.hpp>
 #include <iostream>
 

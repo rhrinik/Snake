@@ -1,9 +1,9 @@
 #pragma once
 #include "GameState.h"
-#include "Image.h"
-#include "Text.h"
+#include "../Display/Image.h"
+#include "../Display/Text.h"
 #include <vector>
-#include "Utilities.h"
+#include "../Utility/Utilities.h"
 
 class GameStateMenu : public GameState {
     States runState(States previous) override;
