@@ -18,7 +18,6 @@ public:
     void draw(Graphics &gfx) const {
         std::ranges::for_each(std::as_const(segments),[&](auto const& p){
             gfx.drawRectangle({p},{p + std::make_pair(40,40)}, Color(100, 250, 50));
-            //gfx.drawCircle(p,20,Color(100, 250, 50));
         });
     }
     void move() {
