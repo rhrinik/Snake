@@ -11,11 +11,7 @@ class Game {
 public:
     explicit Game(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx) {}
     void run();
-    bool init();
-
-    bool running{false};
-    [[nodiscard]] bool isRunning() const;
-
+    void init();
     std::vector<std::unique_ptr<GameState>> states;
     GameState::States currentState{GameState::Menu};
     GameState::States previousState{GameState::Start};
