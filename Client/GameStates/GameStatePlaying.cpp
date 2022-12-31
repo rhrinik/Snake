@@ -2,8 +2,8 @@
 
 GameState::States GameStatePlaying::runState(States previous) {
     if (wnd.isWindowClosed())
-        return GameState::End;
-    if (previous != States::Playing)
+        return End;
+    if (previous != Playing)
         init();
 
     update();
@@ -24,6 +24,8 @@ void GameStatePlaying::updateState() {
         snake.grow();
         food.reposition({2000,1500});
     }
+    if (snake.wallCollision({0,0},{2000,1500}) || snake.selfCollision())
+        std::cout << "OUCH" << std::endl;
 
     /*std::int32_t x;
     std::string s = "message: ";

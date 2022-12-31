@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <ranges>
 #include "../Display/Graphics.h"
 #include <algorithm>
 #include "../Utility/Utilities.h"
@@ -31,12 +32,20 @@ public:
         segments.emplace_back(segments.back());
     }
     void setDirection(Direction newDirection) {
-        if (segments.size() > 2
-        && directionMoves.at(direction) + directionMoves.at(newDirection) == std::make_pair(0,0))
-            return;
+        if (segments.size() > 2 &&
+            directionMoves.at(direction) + directionMoves.at(newDirection) == std::make_pair(0,0))
+                return;
         direction = newDirection;
     }
     [[nodiscard]] std::vector<std::pair<int, int>> const& getSegments() const {
         return segments;
+    }
+    [[nodiscard]] bool selfCollision() const {
+        return segments.size() > 4 &&
+            std::ranges::any_of(segments | std::views::drop(3),[&](auto const& s){return s == segments[0];});
+    }
+    [[nodiscard]] bool wallCollision(std::pair<int,int> wallTopLeft, std::pair<int,int> wallBotRight) const {
+        return segments[0].first + snakeSize > wallBotRight.first || segments[0].first < wallTopLeft.first ||
+                segments[0].second + snakeSize > wallBotRight.second || segments[0].second < wallTopLeft.second;
     }
 };

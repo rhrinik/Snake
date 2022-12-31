@@ -2,11 +2,16 @@
 
 GameState::States GameStateMenu::runState(States previous) {
     if (wnd.isWindowClosed())
-        return GameState::End;
-    if (previous == States::Start)
+        return End;
+    if (previous == Start)
         init();
     if (selectionConfirmed)
-        return Playing;
+        switch (selected) {
+            case Play:
+                return Playing;
+            case Exit:
+                return End;
+        }
 
     update();
     draw();
@@ -22,12 +27,15 @@ void GameStateMenu::drawState() {
     gfx.drawText(title);
     gfx.drawText(play);
     gfx.drawText(exit);
-    if (selected == Play) {
-        play.setOutlineSize(10);
-        exit.setOutlineSize(0);
-    } else {
-        play.setOutlineSize(0);
-        exit.setOutlineSize(10);
+    switch (selected) {
+        case Play:
+            play.setOutlineSize(10);
+            exit.setOutlineSize(0);
+            break;
+        case Exit:
+            play.setOutlineSize(0);
+            exit.setOutlineSize(10);
+            break;
     }
 }
 
