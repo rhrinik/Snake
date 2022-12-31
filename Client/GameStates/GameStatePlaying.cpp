@@ -13,10 +13,6 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 void GameStatePlaying::updateState() {
-    /*auto it = std::find(wnd.getKeys(), wnd.getKeys() + Window::Keys::NumKeys, true);
-    if (it != wnd.getKeys() + Window::Keys::NumKeys)
-        snake.setDirection(static_cast<Snake::Direction>(std::distance(wnd.getKeys(),it)));*/
-
     if (stopwatchGameSpeed.removeTime(0.1))
         snake.move();
 
@@ -38,7 +34,6 @@ void GameStatePlaying::updateState() {
 void GameStatePlaying::drawState() {
     snake.draw(gfx);
     food.draw(gfx);
-    //gfx.drawCircle(gfx.getMouseCoord().first, gfx.getMouseCoord().second, 20, Color(100, 250, 50));
 }
 
 void GameStatePlaying::initState() {
