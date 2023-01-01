@@ -11,7 +11,7 @@ void Game::update() {
         accessToSnake.acquire();
         snake.move();
         accessToSnake.release();
-        //clients.back().sendData({snake.getDirection()});
+        clients.back().sendData({snake.getDirection()});
     }
 }
 
