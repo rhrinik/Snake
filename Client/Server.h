@@ -11,16 +11,12 @@ public:
         return status == sf::Socket::Done;
     }
     void sendData(DataFromClient data) {
-        std::int32_t x;
-        sf::Packet packet;
-        packet << static_cast<std::int32_t>(data.direction);
+        sf::Packet packet = data.toPacket();
         socket.send(packet);
     }
     DataFromServer receiveData() {
-        std::int32_t x;
         sf::Packet packet;
         socket.receive(packet);
-        packet >> x;
-        return {x};
+        return DataFromServer::fromPacket(packet);
     }
 };

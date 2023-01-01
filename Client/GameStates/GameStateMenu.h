@@ -3,7 +3,7 @@
 #include "../Display/Image.h"
 #include "../Display/Text.h"
 #include <vector>
-#include "../Utility/Utilities.h"
+#include "../../Shared/Utility/Utilities.h"
 
 class GameStateMenu : public GameState {
     States runState(States previous) override;

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameState.h"
-#include "../Utility/Stopwatch.h"
+#include "../../Shared/Utility/Stopwatch.h"
 #include "../GameObjects/Snake.h"
 #include "../GameObjects/Food.h"
 #include "../Server.h"

@@ -3,18 +3,18 @@
 #include <ranges>
 #include <algorithm>
 #include <map>
-#include "../Utility/Utilities.h"
+#include "../../Shared/Utility/Utilities.h"
 
-class Snake {
+class SnakeBase {
 public:
     enum Direction { Up, Down, Left, Right };
-private:
+protected:
     static int constexpr snakeSize = 40;
     Direction direction{Right};
     std::vector<std::pair<int,int>> segments;
     inline static std::map<Direction,std::pair<int,int>> const directionMoves = {{Up,{0,-1}},{Down,{0,1}},{Left,{-1,0}},{Right,{1,0}}};
 public:
-    explicit Snake(std::pair<int,int> startingPoint) {
+    explicit SnakeBase(std::pair<int,int> startingPoint) {
         segments.emplace_back(startingPoint);
     }
     void move() {

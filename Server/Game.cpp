@@ -11,7 +11,15 @@ void Game::update() {
         accessToSnake.acquire();
         snake.move();
         accessToSnake.release();
-        clients.back().sendData({snake.getDirection()});
+
+        if (food.getCoords() == snake.getSegments()[0]) {
+            snake.grow();
+            food.reposition({2000,1500});
+            clients.back().sendData({DataFromServer::EatAndMove, snake.getDirection(), food.getCoords()});
+            return;
+        }
+
+        clients.back().sendData({DataFromServer::Move, snake.getDirection()});
     }
 }
 
@@ -39,7 +47,7 @@ void Game::receivePlayerInput(Client& client) {
     while (true) {
         DataFromClient data = client.receiveData();
         accessToSnake.acquire();
-        snake.setDirection(static_cast<Snake::Direction>(data.direction));
+        snake.setDirection(static_cast<SnakeBase::Direction>(data.getDirection()));
         accessToSnake.release();
     }
 }
