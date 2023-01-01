@@ -22,4 +22,6 @@ public:
     void onKeyDown() override;
     void onKeyEnter() override;
     GameStateMenu(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+
+    void restart();
 };

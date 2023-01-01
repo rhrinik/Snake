@@ -4,14 +4,18 @@ GameState::States GameStateMenu::runState(States previous) {
     if (previous == Start)
         init();
     if (previous == Lose) {
-        selected = Play;
-        selectionConfirmed = false;
+        restart();
     }
 
     auto state = update();
     draw();
 
     return state;
+}
+
+void GameStateMenu::restart() {
+    selected = Play;
+    selectionConfirmed = false;
 }
 
 GameState::States GameStateMenu::updateState() {
