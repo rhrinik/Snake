@@ -1,35 +1,50 @@
 #include "Game.h"
 
 void Game::run() {
-    getPlayerInput();
+    if (!stopwatchGameSpeed.removeTime(0.1))
+        return;
     update();
     sendPlayerInfo();
 }
 
 void Game::update() {
-    if (stopwatchGameSpeed.removeTime(0.1)) {
-        snake.move();
+    if (gameEnd)
+        return;
 
-        if (food.getCoords() == snake.getSegments()[0]) {
-            snake.grow();
-            food.reposition({2000,1500});
-            clients.back().sendData({DataFromServer::EatAndMove, snake.getDirection(), food.getCoords()});
-            return;
-        }
+    snake.move();
 
-        if (snake.wallCollision({0,0},{2000,1500}) || snake.selfCollision()) {
-            clients.back().sendData({DataFromServer::Crash, snake.getDirection()});
-            return;
-        }
+    if (checkCollisions()) {
+        gameEnd = true;
+        return;
+    }
+}
 
+void Game::sendMoveSnakes() {
+    if (foodEaten()) {
+        snake.grow();
+        food.reposition({2000, 1500});
+        clients.back().sendData({DataFromServer::EatAndMove, snake.getDirection(), food.getCoords()});
+    } else {
         clients.back().sendData({DataFromServer::Move, snake.getDirection()});
     }
 }
 
-void Game::sendPlayerInfo() {
+bool Game::foodEaten() {
+    return food.getCoords() == snake.getSegments()[0];
 }
 
-void Game::getPlayerInput() {
+bool Game::checkCollisions() {
+    if (snake.wallCollision({0, 0}, {2000, 1500}) || snake.selfCollision()) {
+        clients.back().sendData({DataFromServer::Crash, snake.getDirection()});
+        return true;
+    }
+    return false;
+}
+
+void Game::sendPlayerInfo() {
+    if (gameEnd)
+        return;
+    sendMoveSnakes();
 }
 
 bool Game::isRunning() const {

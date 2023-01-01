@@ -11,6 +11,7 @@
 
 class Game {
     bool running{false};
+    bool gameEnd{false};
     sf::TcpListener listener;
     std::vector<std::jthread> clientReceiveThreads;
     std::vector<Client> clients;
@@ -26,6 +27,11 @@ public:
     void run();
     void update();
     void sendPlayerInfo();
-    void getPlayerInput();
     [[nodiscard]] bool isRunning() const;
+
+    bool checkCollisions();
+
+    void sendMoveSnakes();
+
+    bool foodEaten();
 };

@@ -2,6 +2,8 @@
 
 GameState::States GameState::run(States previous) {
     wnd.processEvents();
+    if (wnd.isWindowClosed())
+        return End;
     return runState(previous);
 }
 

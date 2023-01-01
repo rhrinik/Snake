@@ -6,12 +6,9 @@ void GameStateLose::initState() {
 }
 
 GameState::States GameStateLose::runState(GameState::States previous) {
-    if (wnd.isWindowClosed())
-        return End;
     if (previous == Playing)
         init();
 
-    update();
     draw();
     return nextState;
 }

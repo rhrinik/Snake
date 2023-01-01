@@ -1,12 +1,20 @@
 #include "GameStateMenu.h"
 
 GameState::States GameStateMenu::runState(States previous) {
-    if (wnd.isWindowClosed())
-        return End;
     if (previous == Start)
         init();
-    if (previous == Lose)
+    if (previous == Lose) {
+        selected = Play;
         selectionConfirmed = false;
+    }
+
+    auto state = update();
+    draw();
+
+    return state;
+}
+
+GameState::States GameStateMenu::updateState() {
     if (selectionConfirmed)
         switch (selected) {
             case Play:
@@ -14,14 +22,6 @@ GameState::States GameStateMenu::runState(States previous) {
             case Exit:
                 return End;
         }
-
-    update();
-    draw();
-
-    return Menu;
-}
-
-GameState::States GameStateMenu::updateState() {
     return Menu;
 }
 

@@ -13,8 +13,7 @@ class GameStatePlaying : public GameState {
     States updateState() override;
     void drawState() override;
     void initState() override;
-    void reInitState();
-    Stopwatch stopwatchGameSpeed;
+    void restart();
     Stopwatch stopwatch;
     Server server;
     Snake snake{{160,160}};

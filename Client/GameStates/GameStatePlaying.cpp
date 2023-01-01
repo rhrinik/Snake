@@ -1,8 +1,6 @@
 #include "GameStatePlaying.h"
 
 GameState::States GameStatePlaying::runState(States previous) {
-    if (wnd.isWindowClosed())
-        return End;
     if (previous == Menu)
         init();
 
@@ -36,9 +34,8 @@ void GameStatePlaying::drawState() {
 }
 
 void GameStatePlaying::initState() {
-    stopwatchGameSpeed.reset();
-    stopwatch.reset();
     server.connect();
+    restart();
 }
 
 void GameStatePlaying::onKeyUp() {
@@ -60,7 +57,6 @@ void GameStatePlaying::onKeyRight() {
 void GameStatePlaying::onKeyEnter() {
 }
 
-void GameStatePlaying::reInitState() {
-    stopwatchGameSpeed.reset();
+void GameStatePlaying::restart() {
     stopwatch.reset();
 }
