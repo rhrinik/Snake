@@ -5,6 +5,8 @@ GameState::States GameStateMenu::runState(States previous) {
         return End;
     if (previous == Start)
         init();
+    if (previous == Lose)
+        selectionConfirmed = false;
     if (selectionConfirmed)
         switch (selected) {
             case Play:
@@ -19,7 +21,8 @@ GameState::States GameStateMenu::runState(States previous) {
     return Menu;
 }
 
-void GameStateMenu::updateState() {
+GameState::States GameStateMenu::updateState() {
+    return Menu;
 }
 
 void GameStateMenu::drawState() {
@@ -65,8 +68,6 @@ void GameStateMenu::initState() {
     exitPosition.second += wnd.getSize().second/8;
     exit.setPosition(exitPosition);
     exit.setOutlineColor(Color(70,70,70));
-
-    wnd.registerObject(*this);
 }
 
 void GameStateMenu::onKeyUp() {

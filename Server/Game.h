@@ -5,7 +5,7 @@
 #include <SFML/Network.hpp>
 #include <iostream>
 #include "Client.h"
-#include "../Shared/GameObjects/Snake.h"
+#include "GameObjects/Snake.h"
 #include "../Shared/GameObjects/Food.h"
 #include "../Shared/Utility/Stopwatch.h"
 
@@ -17,9 +17,8 @@ class Game {
     bool makeListener();
     void connectPlayers();
     void receivePlayerInput(Client& client);
-    SnakeBase snake{{160,160}};
+    Snake snake{{160,160}};
     FoodBase food{{320,160}};
-    std::binary_semaphore accessToSnake{1};
     Stopwatch stopwatchGameSpeed;
 public:
     Game() = default;

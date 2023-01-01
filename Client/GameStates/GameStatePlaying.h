@@ -10,9 +10,10 @@
 
 class GameStatePlaying : public GameState {
     [[nodiscard]] States runState(States previous) override;
-    void updateState() override;
+    States updateState() override;
     void drawState() override;
     void initState() override;
+    void reInitState();
     Stopwatch stopwatchGameSpeed;
     Stopwatch stopwatch;
     Server server;

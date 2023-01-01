@@ -14,10 +14,11 @@ protected:
     std::vector<std::pair<int,int>> segments;
     inline static std::map<Direction,std::pair<int,int>> const directionMoves = {{Up,{0,-1}},{Down,{0,1}},{Left,{-1,0}},{Right,{1,0}}};
 public:
+    virtual ~SnakeBase() = default;
     explicit SnakeBase(std::pair<int,int> startingPoint) {
         segments.emplace_back(startingPoint);
     }
-    void move() {
+    virtual void move() {
         for (std::size_t i = segments.size() - 1; i > 0; --i)
             segments[i] = segments[i-1];
         segments[0] += directionMoves.at(direction) * snakeSize;
@@ -26,10 +27,10 @@ public:
     [[nodiscard]] Direction getDirection() const {
         return direction;
     }
-    void grow() {
+    virtual void grow() {
         segments.emplace_back(segments.back());
     }
-    void setDirection(Direction newDirection) {
+    virtual void setDirection(Direction newDirection) {
         if (segments.size() > 2 &&
             directionMoves.at(direction) + directionMoves.at(newDirection) == std::make_pair(0,0))
                 return;

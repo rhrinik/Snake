@@ -4,18 +4,21 @@
 
 class GameState : public KeyPresses {
 public:
-    GameState(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx) {}
-    enum States { Start, End, Playing, Menu };
+    GameState(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx), nextState(End) {
+        wnd.registerObject(*this);
+    }
+    enum States { Start, End, Playing, Menu, Lose, Win };
     [[nodiscard]] States run(States previous);
-    virtual void update();
+    virtual States update();
     virtual void draw();
     virtual void init();
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
-    virtual void updateState() = 0;
+    virtual States updateState() = 0;
     virtual void drawState() = 0;
     virtual void initState() = 0;
 protected:
     Window &wnd;
     Graphics &gfx;
+    States nextState;
 };

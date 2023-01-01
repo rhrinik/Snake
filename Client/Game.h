@@ -4,6 +4,7 @@
 #include "GameStates/GameStatePlaying.h"
 #include "GameStates/GameStateDummy.h"
 #include "GameStates/GameStateMenu.h"
+#include "GameStates/GameStateLose.h"
 
 class Game {
     Graphics& gfx;

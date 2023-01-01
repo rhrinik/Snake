@@ -7,7 +7,7 @@
 
 class GameStateMenu : public GameState {
     States runState(States previous) override;
-    void updateState() override;
+    States updateState() override;
     void drawState() override;
     void initState() override;
     Image imageBackground;

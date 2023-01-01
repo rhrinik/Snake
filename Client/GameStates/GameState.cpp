@@ -5,8 +5,8 @@ GameState::States GameState::run(States previous) {
     return runState(previous);
 }
 
-void GameState::update() {
-    updateState();
+GameState::States GameState::update() {
+    return updateState();
 }
 
 void GameState::draw() {

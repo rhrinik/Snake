@@ -8,14 +8,17 @@ void Game::run() {
 
 void Game::update() {
     if (stopwatchGameSpeed.removeTime(0.1)) {
-        accessToSnake.acquire();
         snake.move();
-        accessToSnake.release();
 
         if (food.getCoords() == snake.getSegments()[0]) {
             snake.grow();
             food.reposition({2000,1500});
             clients.back().sendData({DataFromServer::EatAndMove, snake.getDirection(), food.getCoords()});
+            return;
+        }
+
+        if (snake.wallCollision({0,0},{2000,1500}) || snake.selfCollision()) {
+            clients.back().sendData({DataFromServer::Crash, snake.getDirection()});
             return;
         }
 
@@ -46,9 +49,7 @@ void Game::connectPlayers() {
 void Game::receivePlayerInput(Client& client) {
     while (true) {
         DataFromClient data = client.receiveData();
-        accessToSnake.acquire();
         snake.setDirection(static_cast<SnakeBase::Direction>(data.getDirection()));
-        accessToSnake.release();
     }
 }
 

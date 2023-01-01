@@ -4,7 +4,8 @@ GameState::States GameStateDummy::runState(States previous) {
     return End;
 }
 
-void GameStateDummy::updateState() {
+GameState::States GameStateDummy::updateState() {
+    return End;
 }
 
 void GameStateDummy::drawState() {

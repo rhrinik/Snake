@@ -1,11 +1,13 @@
 #pragma once
 #include "GameState.h"
 
-class GameStateDummy : public GameState {
+class GameStateLose : public GameState {
     [[nodiscard]] States runState(States previous) override;
     States updateState() override;
     void drawState() override;
     void initState() override;
+    Image loseImage;
 public:
-    GameStateDummy(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+    GameStateLose(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+    void onKeyEnter() override;
 };

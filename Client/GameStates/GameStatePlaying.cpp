@@ -3,39 +3,31 @@
 GameState::States GameStatePlaying::runState(States previous) {
     if (wnd.isWindowClosed())
         return End;
-    if (previous != Playing)
+    if (previous == Menu)
         init();
 
-    update();
+    auto state = update();
     draw();
 
-    return Playing;
+    return state;
 }
 
-void GameStatePlaying::updateState() {
+GameState::States GameStatePlaying::updateState() {
     DataFromServer data = server.receiveData();
     switch (data.getSnakeState()) {
         case DataFromServer::EatAndMove:
             snake.grow();
             food.setPosition(data.getNewFoodCoords());
         case DataFromServer::Move:
-            snake.setDirection(
-                    static_cast<Snake::Direction>(data.getDirection()));
+            snake.setDirection(data.getDirection());
             snake.move();
-            break;
+            return Playing;
         case DataFromServer::Crash:
-            break;
+            return Lose;
         case DataFromServer::Win:
             break;
     }
-
-    /*
-    if (food.getCoords() == snake.getSegments()[0]) {
-        snake.grow();
-        food.reposition({2000,1500});
-    }
-    if (snake.wallCollision({0,0},{2000,1500}) || snake.selfCollision())
-        std::cout << "OUCH" << std::endl;*/
+    return Playing;
 }
 
 void GameStatePlaying::drawState() {
@@ -46,7 +38,6 @@ void GameStatePlaying::drawState() {
 void GameStatePlaying::initState() {
     stopwatchGameSpeed.reset();
     stopwatch.reset();
-    wnd.registerObject(*this);
     server.connect();
 }
 
@@ -67,4 +58,9 @@ void GameStatePlaying::onKeyRight() {
 }
 
 void GameStatePlaying::onKeyEnter() {
+}
+
+void GameStatePlaying::reInitState() {
+    stopwatchGameSpeed.reset();
+    stopwatch.reset();
 }
