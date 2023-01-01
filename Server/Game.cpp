@@ -39,7 +39,7 @@ void Game::receivePlayerInput(Client& client) {
     while (true) {
         DataFromClient data = client.receiveData();
         accessToSnake.acquire();
-        snake.setDirection(data.direction);
+        snake.setDirection(static_cast<Snake::Direction>(data.direction));
         accessToSnake.release();
     }
 }

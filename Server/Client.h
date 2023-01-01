@@ -2,8 +2,9 @@
 #include <SFML/Network.hpp>
 #include <memory>
 #include <utility>
-#include "DataToClient.h"
-#include "DataFromClient.h"
+#include "../Shared/DataFromServer.h"
+#include "../Shared/DataFromClient.h"
+#include "GameObjects/Snake.h"
 
 class Client {
     std::shared_ptr<sf::TcpSocket> socket;
@@ -20,7 +21,7 @@ public:
         sf::Socket::Status status = listener.accept(*socket);
         return status == sf::Socket::Done;
     }
-    void sendData(DataToClient data) {
+    void sendData(DataFromServer data) {
         std::int32_t x;
         sf::Packet packet;
         packet << static_cast<std::int32_t>(data.direction);

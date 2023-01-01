@@ -6,7 +6,7 @@
 #include "../Server.h"
 #include <SFML/Network.hpp>
 #include <iostream>
-#include "../DataToServer.h"
+#include "../../Shared/DataFromServer.h"
 
 class GameStatePlaying : public GameState {
     [[nodiscard]] States runState(States previous) override;

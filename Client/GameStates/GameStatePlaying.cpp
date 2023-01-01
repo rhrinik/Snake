@@ -13,8 +13,8 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 void GameStatePlaying::updateState() {
-    DataToClient data = server.receiveData();
-    snake.setDirection(data.direction);
+    DataFromServer data = server.receiveData();
+    snake.setDirection(static_cast<Snake::Direction>(data.direction));
     snake.move();
 
     /*if (stopwatchGameSpeed.removeTime(0.1))

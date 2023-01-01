@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Network.hpp>
-#include "DataToServer.h"
-#include "DataFromServer.h"
+#include "../Shared/DataFromClient.h"
+#include "../Shared/DataFromServer.h"
 
 class Server {
     sf::TcpSocket socket;
@@ -16,11 +16,11 @@ public:
         packet << static_cast<std::int32_t>(data.direction);
         socket.send(packet);
     }
-    DataToClient receiveData() {
+    DataFromServer receiveData() {
         std::int32_t x;
         sf::Packet packet;
         socket.receive(packet);
         packet >> x;
-        return {static_cast<Snake::Direction>(x)};
+        return {x};
     }
 };
