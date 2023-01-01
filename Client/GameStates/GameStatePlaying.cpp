@@ -13,7 +13,11 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 void GameStatePlaying::updateState() {
-    if (stopwatchGameSpeed.removeTime(0.1))
+    DataToClient data = server.receiveData();
+    snake.setDirection(data.direction);
+    snake.move();
+
+    /*if (stopwatchGameSpeed.removeTime(0.1))
         snake.move();
 
     if (food.getCoords() == snake.getSegments()[0]) {
@@ -21,14 +25,7 @@ void GameStatePlaying::updateState() {
         food.reposition({2000,1500});
     }
     if (snake.wallCollision({0,0},{2000,1500}) || snake.selfCollision())
-        std::cout << "OUCH" << std::endl;
-
-    /*std::int32_t x;
-    std::string s = "message: ";
-    sf::Packet packet;
-    packet << s << rand() % 100;
-    server.send(packet);
-    std::cout << "Message sent" << std::endl;*/
+        std::cout << "OUCH" << std::endl;*/
 }
 
 void GameStatePlaying::drawState() {
@@ -37,27 +34,30 @@ void GameStatePlaying::drawState() {
 }
 
 void GameStatePlaying::initState() {
-    //sf::Socket::Status status = server.connect("127.0.0.1", 53000);
-    //if (status != sf::Socket::Done)
     stopwatchGameSpeed.reset();
     stopwatch.reset();
     wnd.registerObject(*this);
+    server.connect();
 }
 
 void GameStatePlaying::onKeyUp() {
-    snake.setDirection(Snake::Direction::Up);
+    server.sendData({Snake::Direction::Up});
+    //snake.setDirection(Snake::Direction::Up);
 }
 
 void GameStatePlaying::onKeyDown() {
-    snake.setDirection(Snake::Direction::Down);
+    server.sendData({Snake::Direction::Down});
+    //snake.setDirection(Snake::Direction::Down);
 }
 
 void GameStatePlaying::onKeyLeft() {
-    snake.setDirection(Snake::Direction::Left);
+    server.sendData({Snake::Direction::Left});
+    //snake.setDirection(Snake::Direction::Left);
 }
 
 void GameStatePlaying::onKeyRight() {
-    snake.setDirection(Snake::Direction::Right);
+    server.sendData({Snake::Direction::Right});
+    //snake.setDirection(Snake::Direction::Right);
 }
 
 void GameStatePlaying::onKeyEnter() {

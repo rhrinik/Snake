@@ -3,8 +3,10 @@
 #include "../Utility/Stopwatch.h"
 #include "../GameObjects/Snake.h"
 #include "../GameObjects/Food.h"
+#include "../Server.h"
 #include <SFML/Network.hpp>
 #include <iostream>
+#include "../DataToServer.h"
 
 class GameStatePlaying : public GameState {
     [[nodiscard]] States runState(States previous) override;
@@ -13,7 +15,7 @@ class GameStatePlaying : public GameState {
     void initState() override;
     Stopwatch stopwatchGameSpeed;
     Stopwatch stopwatch;
-    sf::TcpSocket server;
+    Server server;
     Snake snake{{160,160}};
     Food food{{320,160}};
 public:

@@ -7,6 +7,12 @@ void Game::run() {
 }
 
 void Game::update() {
+    if (stopwatchGameSpeed.removeTime(0.1)) {
+        accessToSnake.acquire();
+        snake.move();
+        accessToSnake.release();
+        //clients.back().sendData({snake.getDirection()});
+    }
 }
 
 void Game::sendPlayerInfo() {
@@ -23,25 +29,18 @@ bool Game::makeListener() {
     return listener.listen(53000) == sf::Socket::Done;
 }
 
-bool Game::connectPlayers() {
-    for (int i = 0; i < 1; ++i) {
-        auto client = std::make_unique<sf::TcpSocket>();
-        if (listener.accept(*client) != sf::Socket::Done)
-            return false;
-        receiveThreads.emplace_back(std::jthread(&Game::receivePlayerInput, this, std::move(client)));
-    }
-    return true;
+void Game::connectPlayers() {
+    clients.emplace_back();
+    clients.back().waitToConnect(listener);
+    clientReceiveThreads.emplace_back(std::jthread(&Game::receivePlayerInput, this, std::ref(clients.back())));
 }
 
-void Game::receivePlayerInput(std::unique_ptr<sf::TcpSocket> client) {
+void Game::receivePlayerInput(Client& client) {
     while (true) {
-        std::int32_t x;
-        std::string s;
-
-        sf::Packet packet;
-        if (client->receive(packet) == sf::Socket::Status::Disconnected) break;
-        packet >> s >> x;
-        std::cout << s << x << std::endl;
+        DataFromClient data = client.receiveData();
+        accessToSnake.acquire();
+        snake.setDirection(data.direction);
+        accessToSnake.release();
     }
 }
 
@@ -51,10 +50,12 @@ bool Game::init() {
         return false;
     }
 
-    if (!connectPlayers()) {
+    connectPlayers();
+
+    /*if (!connectPlayers()) {
         std::cerr << "Error connecting players." << std::endl;
         return false;
-    }
-
+    }*/
+    stopwatchGameSpeed.reset();
     return running = true;
 }
