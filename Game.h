@@ -2,6 +2,7 @@
 
 #include "Graphics.h"
 #include "Stopwatch.h"
+#include "Snake.h"
 #include "Food.h"
 #include "Constants.h"
 #include <SFML/Network.hpp>
@@ -38,4 +39,5 @@ public:
     sf::TcpSocket server;
     Stopwatch stopwatch;
 
+    void updateDirection(Snake &snake);
 };

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Snake.h"
-#include "Food.h"
 #include <tuple>
 
 class Graphics {
@@ -20,9 +18,9 @@ public:
 
     void processWindowEvents();
 
-    void drawSnake(const Snake &snake);
+    void drawSnake(float x, float y);
 
-    void drawFood(Food &food);
+    void drawFood(float x, float y);
 
-    Directions updateDirection(Snake &snake);
+    char getKP();
 };
