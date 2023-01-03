@@ -3,7 +3,7 @@
 class ServerState {
 public:
     ServerState() : nextState(WaitingForPlayers) {}
-    enum States { WaitingForPlayers, PlayingGame };
+    enum States { WaitingForPlayers, PlayingGame, Start, End };
     [[nodiscard]] States run(States previous);
     virtual States update();
     virtual void init();
