@@ -9,9 +9,9 @@ public:
     }
     enum States { Start, End, Playing, Menu, Lose, Win };
     [[nodiscard]] States run(States previous);
-    virtual States update();
-    virtual void draw();
-    virtual void init();
+    States update();
+    void draw();
+    void init();
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
     virtual States updateState() = 0;

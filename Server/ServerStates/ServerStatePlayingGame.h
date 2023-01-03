@@ -4,8 +4,11 @@
 #include "../../Shared/GameObjects/Food.h"
 #include "../../Shared/Utility/Stopwatch.h"
 #include "../Client.h"
+#include <thread>
 
 class ServerStatePlayingGame : public ServerState {
+    std::vector<std::jthread>& clientReceiveThreads;
+    std::vector<Client>& clients;
     States runState(States previous) override;
     States updateState() override;
     void initState() override;
@@ -15,6 +18,10 @@ class ServerStatePlayingGame : public ServerState {
     void receivePlayerInput(Client& client);
     bool checkCollisions();
     void sendMoveSnakes();
+    void sendCrash(Client& client);
     bool foodEaten();
     void sendPlayerInfo();
+public:
+    ServerStatePlayingGame(std::vector<std::jthread> &clientReceiveThreads, std::vector<Client> &clients)
+            : clientReceiveThreads(clientReceiveThreads), clients(clients) {}
 };

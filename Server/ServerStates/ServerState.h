@@ -5,8 +5,9 @@ public:
     ServerState() : nextState(WaitingForPlayers) {}
     enum States { WaitingForPlayers, PlayingGame, Start, End };
     [[nodiscard]] States run(States previous);
-    virtual States update();
-    virtual void init();
+    States update();
+    void init();
+    ~ServerState() = default;
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
     virtual States updateState() = 0;

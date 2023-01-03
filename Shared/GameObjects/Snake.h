@@ -59,4 +59,9 @@ public:
         return segments[0].first + snakeSize > wallBotRight.first || segments[0].first < wallTopLeft.first ||
                segments[0].second + snakeSize > wallBotRight.second || segments[0].second < wallTopLeft.second;
     }
+    virtual void reset(std::pair<int,int> startingPoint) {
+        direction = Right;
+        segments.clear();
+        segments.emplace_back(startingPoint);
+    }
 };

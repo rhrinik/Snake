@@ -1,13 +1,38 @@
 #include "ServerStateWaitingForPlayers.h"
 
 ServerState::States ServerStateWaitingForPlayers::runState(ServerState::States previous) {
-    return Start;
+    if (previous == Start)
+        init();
+    if (previous == PlayingGame)
+        restart();
+
+    update();
+
+    return nextState;
 }
 
 ServerState::States ServerStateWaitingForPlayers::updateState() {
-    return Start;
+    return nextState;
 }
 
 void ServerStateWaitingForPlayers::initState() {
+    if (!makeListener()) {
+        std::cerr << "Listener creation fail." << std::endl;
+        return;
+    }
+    connectPlayers();
+}
 
+bool ServerStateWaitingForPlayers::makeListener() {
+    return listener.listen(53000) == sf::Socket::Done;
+}
+
+void ServerStateWaitingForPlayers::connectPlayers() {
+    clients.emplace_back();
+    clients.back().waitToConnect(listener);
+    nextState = PlayingGame;
+}
+
+void ServerStateWaitingForPlayers::restart() {
+    connectPlayers();
 }

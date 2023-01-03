@@ -56,4 +56,10 @@ public:
         accessToSnake.release();
         return ret;
     }
+
+    void reset(std::pair<int, int> startingPoint) override {
+        accessToSnake.acquire();
+        SnakeBase::reset(startingPoint);
+        accessToSnake.release();
+    }
 };

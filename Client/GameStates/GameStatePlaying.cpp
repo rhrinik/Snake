@@ -59,4 +59,5 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
+    snake.reset({160,160});
 }
