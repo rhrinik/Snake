@@ -64,7 +64,7 @@ void Game::connectPlayers() {
 void Game::receivePlayerInput(Client& client) {
     while (true) {
         DataFromClient data = client.receiveData();
-        snake.setDirection(static_cast<SnakeBase::Direction>(data.getDirection()));
+        snake.setDirection(data.getDirection());
     }
 }
 
