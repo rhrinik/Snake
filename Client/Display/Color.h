@@ -13,4 +13,9 @@ public:
     Color& withG(unsigned char g);
     [[nodiscard]] unsigned char b() const;
     Color& withB(unsigned char b);
+    constexpr Color operator+(Color color) const {
+        return {static_cast<unsigned char>(red + color.red),
+                static_cast<unsigned char>(green + color.green),
+                static_cast<unsigned char>(blue + color.blue)};
+    }
 };

@@ -30,9 +30,9 @@ void ServerStatePlayingGame::sendMoveSnakes() {
     if (gameSpace.foodEaten()) {
         gameSpace.growSnake();
         gameSpace.repositionFood();
-        clients.back().sendData({DataFromServer::EatAndMove, gameSpace.getFoodCoords()});
+        clients.back().sendData({DataFromServer::EatAndMove,Snake::Direction::Right,gameSpace.getFoodCoords()}); // temp right;
     } else {
-        clients.back().sendData({DataFromServer::Move});
+        clients.back().sendData({DataFromServer::Move,Snake::Direction::Right}); // temp right;
     }
 }
 
@@ -42,14 +42,17 @@ void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data) {
 
 void ServerStatePlayingGame::sendPlayerInfo() {
     if (gameSpace.checkCollisions()) {
+        std::cout << "snake x : " << gameSpace.snake.getSegments()[0].first << " sending crash" << std::endl;
         sendCrash(clients.back());
         for (auto &client : clients)
             client.waitForOk();
         nextState = WaitingForPlayers;
-    } else
+    } else {
+        std::cout << "snake x : " << gameSpace.snake.getSegments()[0].first << " sending move" << std::endl;
         sendMoveSnakes();
+    }
 }
 
 void ServerStatePlayingGame::sendCrash(Client &client) {
-    client.sendData({DataFromServer::Crash});
+    client.sendData({DataFromServer::Crash,Snake::Direction::Right}); // temp right;
 }

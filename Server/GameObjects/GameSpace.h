@@ -5,6 +5,7 @@
 #include <iostream>
 
 class GameSpace : public GameSpaceBase {
+public:
     Snake snake{{4,4}};
     FoodBase food{{8,4}};
     std::mutex tileAccess;
@@ -40,6 +41,6 @@ public:
         snake.setDirection(dir);
     }
     bool checkCollisions() {
-        return snake.wallCollision({0, 0}, {50, 37}) || snake.selfCollision();
+        return snake.wallCollision({0, 0}, {tiles.size()/rows, rows}) || snake.selfCollision();
     }
 };

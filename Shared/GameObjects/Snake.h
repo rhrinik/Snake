@@ -55,8 +55,8 @@ public:
     }
 
     [[nodiscard]] bool wallCollision(std::pair<int, int> wallTopLeft, std::pair<int, int> wallBotRight) const {
-        return segments[0].first > wallBotRight.first || segments[0].first < wallTopLeft.first ||
-               segments[0].second > wallBotRight.second || segments[0].second < wallTopLeft.second;
+        return segments[0].first >= wallBotRight.first || segments[0].first < wallTopLeft.first ||
+               segments[0].second >= wallBotRight.second || segments[0].second < wallTopLeft.second;
     }
     virtual void reset(std::pair<int,int> startingPoint) {
         direction = Right;

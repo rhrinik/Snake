@@ -14,7 +14,7 @@ public:
         socket.disconnect();
     }
     bool connect() {
-        sf::Socket::Status status = socket.connect("127.0.0.1", 53000);
+        sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(2));
         return status == sf::Socket::Done;
     }
     void sendData(DataFromClient data) {

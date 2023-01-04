@@ -17,9 +17,11 @@ GameState::States GameStatePlaying::updateState() {
             snake.grow();
             food.setPosition(data.getNewFoodCoords());
         case DataFromServer::Move:
+            std::cout << "snake x : " << snake.getSegments()[0].first << " got move" << std::endl;
             snake.move();
             return Playing;
         case DataFromServer::Crash:
+            std::cout << "snake x : " << snake.getSegments()[0].first << " got crash" << std::endl;
             server.sendData({Snake::Direction::Right, true});
             server.disconnect();
             return Lose;
