@@ -1,17 +1,17 @@
-#include "GameStateWin.h"
+#include "GameStateDraw.h"
 
-void GameStateWin::initState() {
-    nextState = Win;
+void GameStateDraw::initState() {
+    nextState = Draw;
     font.loadFontFromFile("../Client/Resources/font.otf");
 
     title.setFont(font);
-    title.setText("YOU WIN!");
+    title.setText("DRAW");
     title.setSize(300);
     std::pair<int,int> titlePosition = (wnd.getSize() - title.getSize()) / 2;
     title.setPosition(titlePosition);
 }
 
-GameState::States GameStateWin::runState(GameState::States previous) {
+GameState::States GameStateDraw::runState(GameState::States previous) {
     if (previous == Playing)
         init();
 
@@ -19,14 +19,14 @@ GameState::States GameStateWin::runState(GameState::States previous) {
     return nextState;
 }
 
-GameState::States GameStateWin::updateState() {
-    return Win;
+GameState::States GameStateDraw::updateState() {
+    return Draw;
 }
 
-void GameStateWin::drawState() {
+void GameStateDraw::drawState() {
     gfx.drawText(title);
 }
 
-void GameStateWin::onKeyEnter() {
+void GameStateDraw::onKeyEnter() {
     nextState = Menu;
 }

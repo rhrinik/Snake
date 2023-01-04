@@ -3,7 +3,7 @@
 GameState::States GameStateMenu::runState(States previous) {
     if (previous == Start)
         init();
-    if (previous == Lose) {
+    if (previous == Lose || previous == Win || previous == Draw) {
         restart();
     }
 

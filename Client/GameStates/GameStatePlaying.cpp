@@ -24,13 +24,17 @@ GameState::States GameStatePlaying::updateState() {
             server.disconnect();
             return Lose;
         case DataFromServer::Win:
-            break;
+            server.sendData({Snake::Direction::Right, true});
+            server.disconnect();
+            return Win;
         case DataFromServer::OtherEat:
             break;
         case DataFromServer::BothEat:
             break;
         case DataFromServer::Draw:
-            break;
+            server.sendData({Snake::Direction::Right, true});
+            server.disconnect();
+            return Draw;
         case DataFromServer::PutSnakes:
             snake.setDirection(data.getOtherDirection());
             snake.reset(data.getNewFoodCoords());

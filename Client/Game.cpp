@@ -14,4 +14,6 @@ void Game::init() {
     states.emplace_back(std::make_unique<GameStatePlaying>(wnd,gfx));
     states.emplace_back(std::make_unique<GameStateMenu>(wnd,gfx));
     states.emplace_back(std::make_unique<GameStateLose>(wnd,gfx));
+    states.emplace_back(std::make_unique<GameStateWin>(wnd,gfx));
+    states.emplace_back(std::make_unique<GameStateDraw>(wnd,gfx));
 }

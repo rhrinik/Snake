@@ -2,7 +2,7 @@
 #include "GameState.h"
 #include "../../Shared/Utility/Utilities.h"
 
-class GameStateWin : public GameState {
+class GameStateDraw : public GameState {
     [[nodiscard]] States runState(States previous) override;
     States updateState() override;
     void drawState() override;
@@ -10,6 +10,6 @@ class GameStateWin : public GameState {
     Font font;
     Text title;
 public:
-    GameStateWin(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+    GameStateDraw(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
     void onKeyEnter() override;
 };
