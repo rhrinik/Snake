@@ -31,11 +31,23 @@ public:
         continueReceivingData = true;
         thread = std::make_unique<std::jthread>(&Client::receiveData, this, f);
     }
+    std::pair<sf::TcpSocket::Status, bool> receiveWithTimeout(const std::shared_ptr<sf::TcpSocket>& socket, sf::Packet& packet, int timeout) {
+        sf::SocketSelector socketSelector;
+        socketSelector.add(*socket);
+        if (socketSelector.wait(sf::seconds(5))) {
+            return {socket->receive(packet),true};
+        }
+        return {sf::TcpSocket::Status::Disconnected, false};
+    }
     void receiveData(std::function<void(DataFromClient const&)> const& f) {
         while (continueReceivingData) {
             sf::Packet packet;
-            sf::TcpSocket::Status status = socket->receive(packet);
-            if (status == sf::TcpSocket::Status::Disconnected)
+            auto status = receiveWithTimeout(socket, packet, 2);
+            if (!status.second) {
+                socket->disconnect();
+                return;
+            }
+            if (status.first == sf::TcpSocket::Status::Disconnected)
                 return;
             DataFromClient dataFromClient = DataFromClient::fromPacket(packet);
             if (dataFromClient.getOk()) {

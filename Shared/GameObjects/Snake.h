@@ -12,7 +12,6 @@ public:
         Up, Down, Left, Right
     };
 protected:
-    static int constexpr snakeSize = 40;
     Direction direction{Right};
     std::vector<std::pair<int, int>> segments;
     inline static std::map<Direction, std::pair<int, int>> const directionMoves = {{Up,    {0,  -1}},
@@ -29,7 +28,7 @@ public:
     virtual void move() {
         for (std::size_t i = segments.size() - 1; i > 0; --i)
             segments[i] = segments[i - 1];
-        segments[0] += directionMoves.at(direction) * snakeSize;
+        segments[0] += directionMoves.at(direction);
     }
 
     //test
@@ -56,8 +55,8 @@ public:
     }
 
     [[nodiscard]] bool wallCollision(std::pair<int, int> wallTopLeft, std::pair<int, int> wallBotRight) const {
-        return segments[0].first + snakeSize > wallBotRight.first || segments[0].first < wallTopLeft.first ||
-               segments[0].second + snakeSize > wallBotRight.second || segments[0].second < wallTopLeft.second;
+        return segments[0].first > wallBotRight.first || segments[0].first < wallTopLeft.first ||
+               segments[0].second > wallBotRight.second || segments[0].second < wallTopLeft.second;
     }
     virtual void reset(std::pair<int,int> startingPoint) {
         direction = Right;

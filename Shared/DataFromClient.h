@@ -10,7 +10,7 @@ public:
     DataFromClient() = default;
     DataFromClient(SnakeBase::Direction direction, bool ok = false)
         : direction(static_cast<std::int32_t>(direction)),
-        ok(ok ? 369 : 0) {}
+        ok(ok ? 1 : 0) {}
     [[nodiscard]] SnakeBase::Direction getDirection() const {
         return static_cast<SnakeBase::Direction>(direction);
     }

@@ -17,11 +17,9 @@ GameState::States GameStatePlaying::updateState() {
             snake.grow();
             food.setPosition(data.getNewFoodCoords());
         case DataFromServer::Move:
-            snake.setDirection(data.getDirection());
             snake.move();
             return Playing;
         case DataFromServer::Crash:
-            std::cout << "got crash" << std::endl;
             server.sendData({Snake::Direction::Right, true});
             server.disconnect();
             return Lose;
@@ -43,18 +41,22 @@ void GameStatePlaying::initState() {
 
 void GameStatePlaying::onKeyUp() {
     server.sendData({Snake::Direction::Up});
+    snake.setDirection(Snake::Direction::Up);
 }
 
 void GameStatePlaying::onKeyDown() {
     server.sendData({Snake::Direction::Down});
+    snake.setDirection(Snake::Direction::Down);
 }
 
 void GameStatePlaying::onKeyLeft() {
     server.sendData({Snake::Direction::Left});
+    snake.setDirection(Snake::Direction::Left);
 }
 
 void GameStatePlaying::onKeyRight() {
     server.sendData({Snake::Direction::Right});
+    snake.setDirection(Snake::Direction::Right);
 }
 
 void GameStatePlaying::onKeyEnter() {
@@ -62,5 +64,5 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
-    snake.reset({160,160});
+    snake.reset({4,4});
 }

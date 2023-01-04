@@ -7,7 +7,5 @@ Application &Application::getInstance() {
 
 void Application::run() {
     game.init();
-    /*while (game.isRunning())
-        game.run();*/
     game.run();
 }

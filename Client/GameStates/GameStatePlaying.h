@@ -16,8 +16,8 @@ class GameStatePlaying : public GameState {
     void restart();
     Stopwatch stopwatch;
     Server server;
-    Snake snake{{160,160}};
-    Food food{{320,160}};
+    Snake snake{{4,4}};
+    Food food{{8,4}};
 public:
     GameStatePlaying(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 
