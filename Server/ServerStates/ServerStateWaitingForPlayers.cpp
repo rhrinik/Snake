@@ -29,6 +29,8 @@ bool ServerStateWaitingForPlayers::makeListener() {
 
 void ServerStateWaitingForPlayers::connectPlayers() {
     clients.emplace_back();
+    clients.emplace_back();
+    clients.front().waitToConnect(listener);
     clients.back().waitToConnect(listener);
     nextState = PlayingGame;
 }

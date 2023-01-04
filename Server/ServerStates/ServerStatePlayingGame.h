@@ -16,9 +16,9 @@ class ServerStatePlayingGame : public ServerState {
     Stopwatch stopwatchGameSpeed;
     void receivePlayerInput(DataFromClient const& data);
     void sendMoveSnakes();
-    void sendCrash(Client& client);
-    void sendPutSnake(Client &client);
-    void sendPutFood(Client &client);
+    void sendCrash(Client& client, GameSpace::Player player);
+    void sendPutSnake(Client &client, GameSpace::Player player);
+    void sendPutFood(Client &client, GameSpace::Player player);
     void sendPlayerInfo();
 public:
     ServerStatePlayingGame(std::vector<Client> &clients)

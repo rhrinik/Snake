@@ -14,32 +14,32 @@ GameState::States GameStatePlaying::updateState() {
     DataFromServer data = server.receiveData();
     switch (data.getSnakeState()) {
         case DataFromServer::BothEat:
-            //snake2.grow();
-            //food2.setPosition(data.getOtherFoodCoords()); prepare
+            snake2.grow();
+            food2.setPosition(data.getOtherFoodCoords());
         case DataFromServer::EatAndMove:
             snake.grow();
             food.setPosition(data.getNewFoodCoords());
         case DataFromServer::Move:
             snake.move();
-            //snake2.setDirection(data.getOtherDirection()); prepare;
-            //snake2.move(); prepare;
+            snake2.setDirection(data.getOtherDirection());
+            snake2.move();
             return Playing;
         case DataFromServer::OtherEat:
-            //snake2.grow();
-            //food2.setPosition(data.getOtherFoodCoords()); prepare
-            //snake.move();
-            //snake2.setDirection(data.getOtherDirection()); prepare;
-            //snake2.move(); prepare;
+            snake2.grow();
+            food2.setPosition(data.getOtherFoodCoords());
+            snake.move();
+            snake2.setDirection(data.getOtherDirection());
+            snake2.move();
             return Playing;
 
         case DataFromServer::PutSnakes:
             snake.setDirection(data.getOtherDirection());
             snake.reset(data.getNewFoodCoords());
-            //snake2.reset(data.getOtherFoodCoords()); prepare
+            snake2.reset(data.getOtherFoodCoords());
             return Playing;
         case DataFromServer::PutFood:
             food.setPosition(data.getNewFoodCoords());
-            // food2.setPosition(data.getOtherFoodCoords()); prepare
+            food2.setPosition(data.getOtherFoodCoords());
             return Playing;
 
         case DataFromServer::Crash:
@@ -57,9 +57,9 @@ GameState::States GameStatePlaying::updateState() {
 
 void GameStatePlaying::drawState() {
     snake.draw(gfx);
-    //snake2.draw(gfx); prepare
+    snake2.draw(gfx);
     food.draw(gfx);
-    //food2.draw(gfx); prepare
+    food2.draw(gfx);
 }
 
 void GameStatePlaying::initState() {
