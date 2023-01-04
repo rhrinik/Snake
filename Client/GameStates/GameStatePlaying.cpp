@@ -31,6 +31,13 @@ GameState::States GameStatePlaying::updateState() {
             break;
         case DataFromServer::Draw:
             break;
+        case DataFromServer::PutSnakes:
+            snake.setDirection(data.getOtherDirection());
+            snake.reset(data.getNewFoodCoords());
+            break;
+        case DataFromServer::PutFood:
+            food.setPosition(data.getNewFoodCoords());
+            break;
     }
     return Playing;
 }
@@ -70,5 +77,5 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
-    snake.reset({4,4});
+    //snake.reset({4,4});
 }

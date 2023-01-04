@@ -18,10 +18,23 @@ ServerState::States ServerStatePlayingGame::updateState() {
     return nextState;
 }
 
+void ServerStatePlayingGame::sendPutSnake(Client &client) {
+    client.sendData({DataFromServer::PutSnakes,Snake::Direction::Right,gameSpace.getSnakeHead(),{20,20}}); // temp right, temp other food;
+}
+
+void ServerStatePlayingGame::sendPutFood(Client &client) {
+    client.sendData({DataFromServer::PutFood,Snake::Direction::Right,gameSpace.getFoodCoords(),{20,20}}); // temp right, temp other food;
+}
+
 void ServerStatePlayingGame::initState() {
+    gameSpace.resetSnake({20,20});
+    gameSpace.resetFood({1,1});
+    for (auto &client : clients) {
+        sendPutSnake(client);
+        sendPutFood(client);
+    }
     for (auto &client : clients)
         client.startReceivingData([&](DataFromClient const& data){receivePlayerInput(data);});
-    gameSpace.resetSnake({4,4});
     stopwatchGameSpeed.reset();
     nextState = PlayingGame;
 }

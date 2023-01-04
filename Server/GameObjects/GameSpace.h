@@ -12,6 +12,15 @@ public:
     inline static std::mt19937 rng{std::random_device{}()};
 public:
     GameSpace(const std::pair<int, int> &space) : GameSpaceBase(space) {}
+    void resetFood(std::pair<int,int> pos) {
+        std::lock_guard<std::mutex> lock(tileAccess);
+        setEmpty(food.getCoords());
+        setNonEmpty(pos);
+        food.setPosition(pos);
+    }
+    [[nodiscard]] std::pair<int,int> getSnakeHead() {
+        return snake.getSegments()[0];
+    }
     void moveSnake() {
         std::lock_guard<std::mutex> lock(tileAccess);
         GameSpaceBase::moveSnake(snake);
