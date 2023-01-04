@@ -10,7 +10,7 @@ class DataFromServer {
     std::int32_t snakeState{};
     std::int32_t otherSnakeDirection{};
 public:
-    enum SnakeState { Move, EatAndMove, Crash, Win, OtherEat, BothEat, Draw };
+    enum SnakeState { Move, EatAndMove, Crash, Win, OtherEat, BothEat, Draw, PutSnakes };
     DataFromServer() = default;
     DataFromServer(SnakeState snakeState, SnakeBase::Direction direction, std::pair<int,int> newFoodCoords, std::pair<int,int> newFoodOther)
         : snakeState(static_cast<std::int32_t>(snakeState)),

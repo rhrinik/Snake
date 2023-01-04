@@ -29,7 +29,5 @@ public:
     void grow() override {
         SnakeBase::grow();
         segmentColors.emplace_back(snakeColor + Color(distR(rng),distG(rng),distB(rng)));
-        std::cout << "Last color : " << static_cast<int>(segmentColors.back().r())
-            << ',' << static_cast<int>(segmentColors.back().g()) << ',' << static_cast<int>(segmentColors.back().b()) << std::endl;
     }
 };

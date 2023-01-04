@@ -42,15 +42,12 @@ void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data) {
 
 void ServerStatePlayingGame::sendPlayerInfo() {
     if (gameSpace.checkCollisions()) {
-        std::cout << "snake x : " << gameSpace.snake.getSegments()[0].first << " sending crash" << std::endl;
         sendCrash(clients.back());
         for (auto &client : clients)
             client.waitForOk();
         nextState = WaitingForPlayers;
-    } else {
-        std::cout << "snake x : " << gameSpace.snake.getSegments()[0].first << " sending move" << std::endl;
+    } else
         sendMoveSnakes();
-    }
 }
 
 void ServerStatePlayingGame::sendCrash(Client &client) {
