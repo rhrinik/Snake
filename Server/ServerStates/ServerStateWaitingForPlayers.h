@@ -7,7 +7,6 @@
 #include "../Client.h"
 
 class ServerStateWaitingForPlayers : public ServerState {
-    std::vector<std::jthread>& clientReceiveThreads;
     std::vector<Client>& clients;
     States runState(States previous) override;
     States updateState() override;
@@ -17,6 +16,7 @@ class ServerStateWaitingForPlayers : public ServerState {
     void connectPlayers();
     void restart();
 public:
-    ServerStateWaitingForPlayers(std::vector<std::jthread> &clientReceiveThreads, std::vector<Client> &clients)
-            : clientReceiveThreads(clientReceiveThreads), clients(clients) {}
+    ~ServerStateWaitingForPlayers() override;
+    ServerStateWaitingForPlayers(std::vector<Client> &clients)
+            : clients(clients) {}
 };

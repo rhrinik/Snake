@@ -5,21 +5,29 @@
 
 class DataFromClient {
     std::int32_t direction;
+    std::int32_t ok;
 public:
     DataFromClient() = default;
-    DataFromClient(SnakeBase::Direction direction)
-        : direction(static_cast<std::int32_t>(direction)) {}
+    DataFromClient(SnakeBase::Direction direction, bool ok = false)
+        : direction(static_cast<std::int32_t>(direction)),
+        ok(ok ? 369 : 0) {}
     [[nodiscard]] SnakeBase::Direction getDirection() const {
         return static_cast<SnakeBase::Direction>(direction);
     }
+    [[nodiscard]] bool getOk() const {
+        return static_cast<bool>(ok);
+    }
+    [[nodiscard]] std::int32_t testOk() const {
+        return ok;
+    }
     [[nodiscard]] sf::Packet toPacket() const {
         sf::Packet packet;
-        packet << direction;
+        packet << direction << ok;
         return packet;
     }
     static DataFromClient fromPacket(sf::Packet packet) {
         DataFromClient data{};
-        packet >> data.direction;
+        packet >> data.direction >> data.ok;
         return data;
     }
 };

@@ -7,7 +7,6 @@
 #include <thread>
 
 class ServerStatePlayingGame : public ServerState {
-    std::vector<std::jthread>& clientReceiveThreads;
     std::vector<Client>& clients;
     States runState(States previous) override;
     States updateState() override;
@@ -15,13 +14,13 @@ class ServerStatePlayingGame : public ServerState {
     Snake snake{{160,160}};
     FoodBase food{{320,160}};
     Stopwatch stopwatchGameSpeed;
-    void receivePlayerInput(Client& client);
+    void receivePlayerInput(DataFromClient const& data);
     bool checkCollisions();
     void sendMoveSnakes();
     void sendCrash(Client& client);
     bool foodEaten();
     void sendPlayerInfo();
 public:
-    ServerStatePlayingGame(std::vector<std::jthread> &clientReceiveThreads, std::vector<Client> &clients)
-            : clientReceiveThreads(clientReceiveThreads), clients(clients) {}
+    ServerStatePlayingGame(std::vector<Client> &clients)
+            : clients(clients) {}
 };

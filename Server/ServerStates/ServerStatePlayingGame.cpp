@@ -20,7 +20,7 @@ ServerState::States ServerStatePlayingGame::updateState() {
 
 void ServerStatePlayingGame::initState() {
     for (auto &client : clients)
-        clientReceiveThreads.emplace_back(std::jthread(&ServerStatePlayingGame::receivePlayerInput, this, std::ref(client)));
+        client.startReceivingData([&](DataFromClient const& data){receivePlayerInput(data);});
     snake.reset({160,160});
     stopwatchGameSpeed.reset();
     nextState = PlayingGame;
@@ -40,11 +40,8 @@ bool ServerStatePlayingGame::foodEaten() {
     return food.getCoords() == snake.getSegments()[0];
 }
 
-void ServerStatePlayingGame::receivePlayerInput(Client &client) {
-    while (true) {
-        DataFromClient data = client.receiveData();
-        snake.setDirection(data.getDirection());
-    }
+void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data) {
+    snake.setDirection(data.getDirection());
 }
 
 bool ServerStatePlayingGame::checkCollisions() {
@@ -54,6 +51,8 @@ bool ServerStatePlayingGame::checkCollisions() {
 void ServerStatePlayingGame::sendPlayerInfo() {
     if (checkCollisions()) {
         sendCrash(clients.back());
+        for (auto &client : clients)
+            client.waitForOk();
         nextState = WaitingForPlayers;
     } else
         sendMoveSnakes();

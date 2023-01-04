@@ -12,6 +12,7 @@ public:
     States update();
     void draw();
     void init();
+    virtual ~GameState() = default;
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
     virtual States updateState() = 0;

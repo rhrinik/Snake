@@ -21,6 +21,9 @@ GameState::States GameStatePlaying::updateState() {
             snake.move();
             return Playing;
         case DataFromServer::Crash:
+            std::cout << "got crash" << std::endl;
+            server.sendData({Snake::Direction::Right, true});
+            server.disconnect();
             return Lose;
         case DataFromServer::Win:
             break;

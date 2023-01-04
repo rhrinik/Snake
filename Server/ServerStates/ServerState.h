@@ -7,7 +7,7 @@ public:
     [[nodiscard]] States run(States previous);
     States update();
     void init();
-    ~ServerState() = default;
+    virtual ~ServerState() = default;
 private:
     [[nodiscard]] virtual States runState(States previous) = 0;
     virtual States updateState() = 0;

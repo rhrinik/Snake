@@ -20,7 +20,7 @@ void ServerStateWaitingForPlayers::initState() {
         std::cerr << "Listener creation fail." << std::endl;
         return;
     }
-    connectPlayers();
+    restart();
 }
 
 bool ServerStateWaitingForPlayers::makeListener() {
@@ -34,5 +34,11 @@ void ServerStateWaitingForPlayers::connectPlayers() {
 }
 
 void ServerStateWaitingForPlayers::restart() {
+    clients.clear();
     connectPlayers();
 }
+
+ServerStateWaitingForPlayers::~ServerStateWaitingForPlayers() {
+    listener.close();
+}
+

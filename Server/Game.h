@@ -16,26 +16,9 @@ class Game {
     std::vector<std::unique_ptr<ServerState>> states;
     ServerState::States currentState{ServerState::WaitingForPlayers};
     ServerState::States previousState{ServerState::Start};
-
-    //bool running{false};
-    //bool gameEnd{false};
-    //sf::TcpListener listener; //ok
-    std::vector<std::jthread> clientReceiveThreads; //ostava tu
-    std::vector<Client> clients; //ostava tu
-    //bool makeListener(); //ok
-    //void connectPlayers(); //ok
-    //void receivePlayerInput(Client& client); //ok
-    //Snake snake{{160,160}}; //ok
-    //FoodBase food{{320,160}}; //ok
-    //Stopwatch stopwatchGameSpeed; //ok
+    std::vector<Client> clients;
 public:
     Game() = default;
     void init();
     void run();
-    //void update();
-    //void sendPlayerInfo(); //ok
-    //[[nodiscard]] bool isRunning() const; ide prec
-    //bool checkCollisions(); //ok
-    //void sendMoveSnakes(); //ok
-    //bool foodEaten(); //ok
 };
