@@ -13,42 +13,53 @@ GameState::States GameStatePlaying::runState(States previous) {
 GameState::States GameStatePlaying::updateState() {
     DataFromServer data = server.receiveData();
     switch (data.getSnakeState()) {
+        case DataFromServer::BothEat:
+            //snake2.grow();
+            //food2.setPosition(data.getOtherFoodCoords()); prepare
         case DataFromServer::EatAndMove:
             snake.grow();
             food.setPosition(data.getNewFoodCoords());
         case DataFromServer::Move:
             snake.move();
+            //snake2.setDirection(data.getOtherDirection()); prepare;
+            //snake2.move(); prepare;
             return Playing;
-        case DataFromServer::Crash:
-            server.sendData({Snake::Direction::Right, true});
-            server.disconnect();
-            return Lose;
-        case DataFromServer::Win:
-            server.sendData({Snake::Direction::Right, true});
-            server.disconnect();
-            return Win;
         case DataFromServer::OtherEat:
-            break;
-        case DataFromServer::BothEat:
-            break;
-        case DataFromServer::Draw:
-            server.sendData({Snake::Direction::Right, true});
-            server.disconnect();
-            return Draw;
+            //snake2.grow();
+            //food2.setPosition(data.getOtherFoodCoords()); prepare
+            //snake.move();
+            //snake2.setDirection(data.getOtherDirection()); prepare;
+            //snake2.move(); prepare;
+            return Playing;
+
         case DataFromServer::PutSnakes:
             snake.setDirection(data.getOtherDirection());
             snake.reset(data.getNewFoodCoords());
-            break;
+            //snake2.reset(data.getOtherFoodCoords()); prepare
+            return Playing;
         case DataFromServer::PutFood:
             food.setPosition(data.getNewFoodCoords());
-            break;
+            // food2.setPosition(data.getOtherFoodCoords()); prepare
+            return Playing;
+
+        case DataFromServer::Crash:
+            server.okAndDisconnect();
+            return Lose;
+        case DataFromServer::Win:
+            server.okAndDisconnect();
+            return Win;
+        case DataFromServer::Draw:
+            server.okAndDisconnect();
+            return Draw;
     }
     return Playing;
 }
 
 void GameStatePlaying::drawState() {
     snake.draw(gfx);
+    //snake2.draw(gfx); prepare
     food.draw(gfx);
+    //food2.draw(gfx); prepare
 }
 
 void GameStatePlaying::initState() {
@@ -81,5 +92,4 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
-    //snake.reset({4,4});
 }

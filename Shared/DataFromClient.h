@@ -17,9 +17,6 @@ public:
     [[nodiscard]] bool getOk() const {
         return static_cast<bool>(ok);
     }
-    [[nodiscard]] std::int32_t testOk() const {
-        return ok;
-    }
     [[nodiscard]] sf::Packet toPacket() const {
         sf::Packet packet;
         packet << direction << ok;

@@ -26,4 +26,11 @@ public:
         sf::TcpSocket::Status status = socket.receive(packet);
         return DataFromServer::fromPacket(packet);
     }
+    void sendOk() {
+        sendData({SnakeBase::Direction::Right, true});
+    }
+    void okAndDisconnect() {
+        sendOk();
+        disconnect();
+    }
 };

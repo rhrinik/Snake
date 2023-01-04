@@ -18,6 +18,8 @@ class GameStatePlaying : public GameState {
     Server server;
     Snake snake{{4,4}};
     Food food{{8,4}};
+    Snake snake2{{4,4}};
+    Food food2{{8,4}};
 public:
     GameStatePlaying(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 
