@@ -17,6 +17,23 @@ public:
     }
     bool connect() {
         sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(2));
+        switch (status) {
+            case sf::Socket::Done:
+                std::cout << "connect Done" << std::endl;
+                break;
+            case sf::Socket::NotReady:
+                std::cout << "connect NotReady" << std::endl;
+                break;
+            case sf::Socket::Partial:
+                std::cout << "connect Partial" << std::endl;
+                break;
+            case sf::Socket::Disconnected:
+                std::cout << "connect Disconnected" << std::endl;
+                break;
+            case sf::Socket::Error:
+                std::cout << "connect Error" << std::endl;
+                break;
+        }
         return status == sf::Socket::Done;
     }
     void sendData(DataFromClient data) {

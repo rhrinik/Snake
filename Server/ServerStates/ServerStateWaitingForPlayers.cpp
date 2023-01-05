@@ -41,10 +41,13 @@ void ServerStateWaitingForPlayers::restart() {
     clients.clear();
     clients.emplace_back();
     clients.emplace_back();
-    bool connected = false;
-    while (!connected) {
-        if (clients.front().waitToConnect(listener, selector) && clients.back().waitToConnect(listener, selector))
-            connected = true;
+    bool connected1 = false;
+    bool connected2 = false;
+    while (!connected1 || !connected2) {
+        if (!connected1)
+            connected1 = clients.front().waitToConnect(listener, selector);
+        if (!connected2)
+            connected2 = clients.back().waitToConnect(listener, selector);
         {
             std::lock_guard<std::mutex> lock(userEndAccess);
             if (!userEnd)
