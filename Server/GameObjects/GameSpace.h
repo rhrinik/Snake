@@ -64,7 +64,13 @@ public:
         return snakesMap.at(player).getDirection();
     }
     bool checkCollisions(Player player) {
-        std::cout << "Player : " << player << " snake x,y :" << snakesMap.at(player).getSegments()[0].first << ',' << snakesMap.at(player).getSegments()[0].second << std::endl;
         return snakesMap.at(player).wallCollision({0, 0}, {tiles.size()/rows, rows}) || snakesMap.at(player).selfCollision();
+    }
+    std::pair<bool,Player> checkSnakeCollisions() {
+        if (std::ranges::any_of(snake.getSegments(), [&](auto const &s) { return s == snake2.getSegments()[0]; }))
+            return {true, Player1};
+        if (std::ranges::any_of(snake2.getSegments(), [&](auto const &s) { return s == snake.getSegments()[0]; }))
+            return {true, Player2};
+        return {false, Player1};
     }
 };
