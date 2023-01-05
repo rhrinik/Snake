@@ -8,7 +8,7 @@ void Game::run() {
     }
 }
 
-void Game::init() {
-    states.emplace_back(std::make_unique<ServerStateWaitingForPlayers>(clients));
+void Game::init(int port) {
+    states.emplace_back(std::make_unique<ServerStateWaitingForPlayers>(clients, port));
     states.emplace_back(std::make_unique<ServerStatePlayingGame>(clients));
 }

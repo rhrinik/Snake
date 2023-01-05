@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdlib>
 #include <thread>
+#include <mutex>
 #include <memory>
 #include <SFML/Network.hpp>
 #include <iostream>
@@ -19,6 +20,6 @@ class Game {
     std::vector<Client> clients;
 public:
     Game() = default;
-    void init();
+    void init(int port);
     void run();
 };

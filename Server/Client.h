@@ -15,13 +15,17 @@ class Client {
     std::unique_ptr<std::jthread> thread;
     bool continueReceivingData;
     GameSpace::Player player{GameSpace::Player1};
+    //std::mutex startStop;
 public:
     ~Client() {
         socket->disconnect();
     }
     Client() : socket(std::make_shared<sf::TcpSocket>()) {}
     Client(Client &&client) noexcept : socket(client.socket), thread(std::move(client.thread)) {}
-    bool waitToConnect(sf::TcpListener& listener) {
+    bool waitToConnect(sf::TcpListener& listener, sf::SocketSelector& selector) {
+        selector.wait(sf::seconds(0.5));
+        if (!selector.isReady(listener))
+            return false;
         sf::Socket::Status status = listener.accept(*socket);
         return status == sf::Socket::Done;
     }
@@ -47,7 +51,12 @@ public:
         }
         return {sf::TcpSocket::Status::Disconnected, false};
     }
+    void stopReceivingData() {
+        //std::lock_guard<std::mutex> lock(startStop);
+        //continueReceivingData = false;
+    }
     void receiveData(std::function<void(DataFromClient const&,Client& client)> const& f) {
+        //std::lock_guard<std::mutex> lock(startStop);
         while (continueReceivingData) {
             sf::Packet packet;
             //auto status = receiveWithTimeout(socket, packet, 10);
