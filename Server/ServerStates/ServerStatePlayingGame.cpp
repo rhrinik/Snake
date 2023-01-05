@@ -9,7 +9,7 @@ ServerState::States ServerStatePlayingGame::runState(ServerState::States previou
 }
 
 ServerState::States ServerStatePlayingGame::updateState() {
-    if (!stopwatchGameSpeed.removeTime(0.5))
+    if (!stopwatchGameSpeed.removeTime(1))
         return PlayingGame;
 
     gameSpace.moveSnake(GameSpace::Player1);
@@ -30,7 +30,7 @@ void ServerStatePlayingGame::sendPutFood(Client &client, GameSpace::Player playe
     client.sendData({DataFromServer::PutFood,
                      Snake::Direction::Right,
                      gameSpace.getFoodCoords(player),
-                     gameSpace.getFoodCoords(gameSpace.otherPlayer(player))}); // temp right, temp other food;
+                     gameSpace.getFoodCoords(gameSpace.otherPlayer(player))});
 }
 
 void ServerStatePlayingGame::initState() {
@@ -40,38 +40,55 @@ void ServerStatePlayingGame::initState() {
     gameSpace.resetSnake({20,20}, GameSpace::Player2);
     gameSpace.resetFood({10,10}, GameSpace::Player2);
 
-    sendPutSnake(clients[0],GameSpace::Player1);
-    sendPutFood(clients[0],GameSpace::Player1);
+    sendPutSnake(clients[1],GameSpace::Player1);
+    sendPutFood(clients[1],GameSpace::Player1);
 
-    sendPutSnake(clients[1],GameSpace::Player2);
-    sendPutFood(clients[1],GameSpace::Player2);
+    sendPutSnake(clients[0],GameSpace::Player2);
+    sendPutFood(clients[0],GameSpace::Player2);
 
+    clients.back().setPlayer(GameSpace::Player1);
+    clients.front().setPlayer(GameSpace::Player2);
     for (auto &client : clients)
-        client.startReceivingData([&](DataFromClient const& data){receivePlayerInput(data);});
+        client.startReceivingData([&](DataFromClient const& data,Client& client){receivePlayerInput(data, client);});
     stopwatchGameSpeed.reset();
     nextState = PlayingGame;
 }
 
 void ServerStatePlayingGame::sendMoveSnakes() {
-    /*if (gameSpace.foodEaten()) {
-        gameSpace.growSnake();
-        gameSpace.repositionFood();
-        clients.back().sendData({DataFromServer::EatAndMove,Snake::Direction::Right,gameSpace.getFoodCoords()}); // temp right;
-    } else {
-        clients.back().sendData({DataFromServer::Move,Snake::Direction::Right}); // temp right;
-    }*/
-    if (gameSpace.foodEaten(GameSpace::Player1)) {
+    bool player1eat = gameSpace.foodEaten(GameSpace::Player1);
+    bool player2eat = gameSpace.foodEaten(GameSpace::Player2);
+
+    if (player1eat && player2eat) {
+        gameSpace.growSnake(GameSpace::Player1);
+        gameSpace.growSnake(GameSpace::Player2);
+        gameSpace.repositionFood(GameSpace::Player1);
+        gameSpace.repositionFood(GameSpace::Player2);
+        clients.back().sendData({DataFromServer::BothEat,gameSpace.getSnakeDirection(GameSpace::Player2),gameSpace.getFoodCoords(GameSpace::Player1),gameSpace.getFoodCoords(GameSpace::Player2)});
+        clients.front().sendData({DataFromServer::BothEat,gameSpace.getSnakeDirection(GameSpace::Player1),gameSpace.getFoodCoords(GameSpace::Player2),gameSpace.getFoodCoords(GameSpace::Player1)});
+    }
+
+    if (!player1eat && !player2eat) {
+        clients.front().sendData({DataFromServer::Move,gameSpace.getSnakeDirection(GameSpace::Player1)});
+        clients.back().sendData({DataFromServer::Move,gameSpace.getSnakeDirection(GameSpace::Player2)});
+    }
+
+    if (player1eat) {
         gameSpace.growSnake(GameSpace::Player1);
         gameSpace.repositionFood(GameSpace::Player1);
-        clients.back().sendData({DataFromServer::EatAndMove,Snake::Direction::Right,gameSpace.getFoodCoords(GameSpace::Player1)}); // temp right;
-    } else {
-        clients.back().sendData({DataFromServer::Move,Snake::Direction::Right}); // temp right;
+        clients.back().sendData({DataFromServer::EatAndMove,gameSpace.getSnakeDirection(GameSpace::Player2),gameSpace.getFoodCoords(GameSpace::Player1)});
+        clients.front().sendData({DataFromServer::OtherEat,gameSpace.getSnakeDirection(GameSpace::Player1),{0,0},gameSpace.getFoodCoords(GameSpace::Player1)});
+    }
+
+    if (player2eat) {
+        gameSpace.growSnake(GameSpace::Player2);
+        gameSpace.repositionFood(GameSpace::Player2);
+        clients.front().sendData({DataFromServer::EatAndMove,gameSpace.getSnakeDirection(GameSpace::Player1),gameSpace.getFoodCoords(GameSpace::Player2)});
+        clients.back().sendData({DataFromServer::OtherEat,gameSpace.getSnakeDirection(GameSpace::Player2),{0,0},gameSpace.getFoodCoords(GameSpace::Player2)});
     }
 }
 
-void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data) {
-    //gameSpace.setSnakeDirection(data.getDirection());
-    gameSpace.setSnakeDirection(data.getDirection(),GameSpace::Player1);
+void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data, Client& client) {
+    gameSpace.setSnakeDirection(data.getDirection(),client.getPlayer());
 }
 
 void ServerStatePlayingGame::sendPlayerInfo() {
@@ -92,5 +109,5 @@ void ServerStatePlayingGame::sendPlayerInfo() {
 }
 
 void ServerStatePlayingGame::sendCrash(Client &client, GameSpace::Player player) {
-    client.sendData({DataFromServer::Crash,Snake::Direction::Right}); // temp right;
+    client.sendData({DataFromServer::Crash,gameSpace.getSnakeDirection(gameSpace.otherPlayer(player))});
 }

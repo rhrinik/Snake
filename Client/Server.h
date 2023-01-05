@@ -8,9 +8,11 @@ class Server {
     sf::TcpSocket socket;
 public:
     ~Server() {
+        std::cout << "~Server() Disconnected" << std::endl;
         disconnect();
     }
     void disconnect() {
+        std::cout << "disconnect() Disconnected" << std::endl;
         socket.disconnect();
     }
     bool connect() {
@@ -24,6 +26,23 @@ public:
     DataFromServer receiveData() {
         sf::Packet packet;
         sf::TcpSocket::Status status = socket.receive(packet);
+        switch (status) {
+            case sf::Socket::Done:
+                std::cout << "Done" << std::endl;
+                break;
+            case sf::Socket::NotReady:
+                std::cout << "NotReady" << std::endl;
+                break;
+            case sf::Socket::Partial:
+                std::cout << "Partial" << std::endl;
+                break;
+            case sf::Socket::Disconnected:
+                std::cout << "Disconnected" << std::endl;
+                break;
+            case sf::Socket::Error:
+                std::cout << "Error" << std::endl;
+                break;
+        }
         return DataFromServer::fromPacket(packet);
     }
     void sendOk() {

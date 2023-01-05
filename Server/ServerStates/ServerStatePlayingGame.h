@@ -14,7 +14,7 @@ class ServerStatePlayingGame : public ServerState {
     void initState() override;
     GameSpace gameSpace{{50,37}};
     Stopwatch stopwatchGameSpeed;
-    void receivePlayerInput(DataFromClient const& data);
+    void receivePlayerInput(DataFromClient const& data, Client& client);
     void sendMoveSnakes();
     void sendCrash(Client& client, GameSpace::Player player);
     void sendPutSnake(Client &client, GameSpace::Player player);

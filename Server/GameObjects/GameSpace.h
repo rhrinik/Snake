@@ -60,7 +60,11 @@ public:
     void setSnakeDirection(Snake::Direction dir, Player player) {
         snakesMap.at(player).setDirection(dir);
     }
+    Snake::Direction getSnakeDirection (Player player) {
+        return snakesMap.at(player).getDirection();
+    }
     bool checkCollisions(Player player) {
+        std::cout << "Player : " << player << " snake x,y :" << snakesMap.at(player).getSegments()[0].first << ',' << snakesMap.at(player).getSegments()[0].second << std::endl;
         return snakesMap.at(player).wallCollision({0, 0}, {tiles.size()/rows, rows}) || snakesMap.at(player).selfCollision();
     }
 };
