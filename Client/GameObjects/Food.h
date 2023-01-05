@@ -6,10 +6,10 @@
 #include "../../Shared/GameObjects/Food.h"
 
 class Food : public FoodBase {
-    static Color constexpr foodColor = {255, 0, 0};
+     Color  foodColor;
     static int constexpr foodSize = 40;
 public:
-    explicit Food(std::pair<int, int> coords) : FoodBase(std::move(coords)) {}
+    explicit Food(std::pair<int, int> coords,Color color) : FoodBase(std::move(coords)),foodColor{color} {}
     void draw(Graphics& gfx) {
         gfx.drawCircle(coords * foodSize, foodSize/2, foodColor);
     }
