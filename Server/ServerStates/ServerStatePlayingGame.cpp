@@ -92,9 +92,18 @@ void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data, Clie
 }
 
 void ServerStatePlayingGame::sendPlayerInfo() {
-    auto crash = gameSpace.checkSnakeCollisions();
+    GameSpace::Player crash = gameSpace.checkSnakeCollisions();
 
-    if ((crash.first && crash.second == GameSpace::Player1) || gameSpace.checkCollisions(GameSpace::Player1)) {
+    if (crash == GameSpace::Both) {
+        sendDraw(clients.back(),GameSpace::Player1);
+        sendDraw(clients.front(),GameSpace::Player2);
+        for (auto &client : clients)
+            client.waitForOk();
+        nextState = WaitingForPlayers;
+        return;
+    }
+
+    if ((crash == GameSpace::Player1) || gameSpace.checkCollisions(GameSpace::Player1)) {
         sendCrash(clients.back(),GameSpace::Player1);
         sendWin(clients.front(),GameSpace::Player2);
         for (auto &client : clients)
@@ -103,7 +112,7 @@ void ServerStatePlayingGame::sendPlayerInfo() {
         return;
     }
 
-    if ((crash.first && crash.second == GameSpace::Player2) || gameSpace.checkCollisions(GameSpace::Player2)) {
+    if ((crash == GameSpace::Player2) || gameSpace.checkCollisions(GameSpace::Player2)) {
         sendCrash(clients.front(),GameSpace::Player2);
         sendWin(clients.back(),GameSpace::Player1);
         for (auto &client : clients)
@@ -121,4 +130,8 @@ void ServerStatePlayingGame::sendCrash(Client &client, GameSpace::Player player)
 
 void ServerStatePlayingGame::sendWin(Client &client, GameSpace::Player player) {
     client.sendData({DataFromServer::Win,gameSpace.getSnakeDirection(gameSpace.otherPlayer(player))});
+}
+
+void ServerStatePlayingGame::sendDraw(Client &client, GameSpace::Player player) {
+    client.sendData({DataFromServer::Draw,gameSpace.getSnakeDirection(gameSpace.otherPlayer(player))});
 }

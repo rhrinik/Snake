@@ -18,6 +18,7 @@ class ServerStatePlayingGame : public ServerState {
     void sendMoveSnakes();
     void sendCrash(Client& client, GameSpace::Player player);
     void sendWin(Client& client, GameSpace::Player player);
+    void sendDraw(Client& client, GameSpace::Player player);
     void sendPutSnake(Client &client, GameSpace::Player player);
     void sendPutFood(Client &client, GameSpace::Player player);
     void sendPlayerInfo();

@@ -6,7 +6,7 @@
 
 class GameSpace : public GameSpaceBase {
 public:
-    enum Player {Player1, Player2};
+    enum Player {Player1, Player2, Both, None};
 private:
     Snake snake{{4,4}};
     Snake snake2{{4,4}};
@@ -66,11 +66,16 @@ public:
     bool checkCollisions(Player player) {
         return snakesMap.at(player).wallCollision({0, 0}, {tiles.size()/rows, rows}) || snakesMap.at(player).selfCollision();
     }
-    std::pair<bool,Player> checkSnakeCollisions() {
-        if (std::ranges::any_of(snake.getSegments(), [&](auto const &s) { return s == snake2.getSegments()[0]; }))
-            return {true, Player1};
-        if (std::ranges::any_of(snake2.getSegments(), [&](auto const &s) { return s == snake.getSegments()[0]; }))
-            return {true, Player2};
-        return {false, Player1};
+    Player checkSnakeCollisions() {
+        bool snake1crash = std::ranges::any_of(snake.getSegments(), [&](auto const &s) { return s == snake2.getSegments()[0];});
+        bool snake2crash = std::ranges::any_of(snake2.getSegments(), [&](auto const &s) { return s == snake.getSegments()[0];});
+
+        if (snake1crash && snake2crash)
+            return Both;
+        if (snake1crash)
+            return Player1;
+        if (snake2crash)
+            return Player2;
+        return None;
     }
 };
