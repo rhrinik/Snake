@@ -128,5 +128,7 @@ void GameStateSelectIPAndPort::restart() {
     numberCounts = {0,0,0,0};
     ipSelected = false;
     input = true;
+    inputIp.clear();
+    inputPort.clear();
     nextState = SelectIPAndPort;
 }

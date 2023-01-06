@@ -27,4 +27,8 @@ public:
     [[nodiscard]] std::string getText() const {
         return string;
     }
+    void clear() {
+        string.clear();
+        Text::setText(string);
+    }
 };
