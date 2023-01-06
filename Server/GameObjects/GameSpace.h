@@ -70,8 +70,14 @@ public:
         bool snake1crash = std::ranges::any_of(snake.getSegments(), [&](auto const &s) { return s == snake2.getSegments()[0];});
         bool snake2crash = std::ranges::any_of(snake2.getSegments(), [&](auto const &s) { return s == snake.getSegments()[0];});
 
-        if (snake1crash && snake2crash)
-            return Both;
+        if (snake1crash && snake2crash) {
+            if (snake.getSegments().size() == snake2.getSegments().size())
+                return Both;
+            if (snake.getSegments().size() > snake2.getSegments().size()) {
+                return Player1;
+            }
+            return Player2;
+        }
         if (snake1crash)
             return Player1;
         if (snake2crash)
