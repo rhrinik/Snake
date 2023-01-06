@@ -71,9 +71,9 @@ public:
         bool snake2crash = std::ranges::any_of(snake2.getSegments(), [&](auto const &s) { return s == snake.getSegments()[0];});
 
         if (snake1crash && snake2crash) {
-            if (snake.getSegments().size() == snake2.getSegments().size())
+            if (snake.getSize() == snake2.getSize())
                 return Both;
-            if (snake.getSegments().size() > snake2.getSegments().size()) {
+            if (snake.getSize() > snake2.getSize()) {
                 return Player1;
             }
             return Player2;

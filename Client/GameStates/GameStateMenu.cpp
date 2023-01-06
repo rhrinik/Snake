@@ -23,8 +23,8 @@ GameState::States GameStateMenu::updateState() {
     if (selectionConfirmed)
         switch (selected) {
             case Play:
-               // return Playing;
                 input = false;
+                return Playing;
                 return SelectIPAndPort;
             case Exit:
                 return End;

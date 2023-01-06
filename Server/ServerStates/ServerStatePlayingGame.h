@@ -22,7 +22,10 @@ class ServerStatePlayingGame : public ServerState {
     void sendPutSnake(Client &client, GameSpace::Player player);
     void sendPutFood(Client &client, GameSpace::Player player);
     void sendPlayerInfo();
+    std::mutex accessToSend;
 public:
     ServerStatePlayingGame(std::vector<Client> &clients)
             : clients(clients) {}
+
+    void endGame();
 };

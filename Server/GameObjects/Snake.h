@@ -50,6 +50,13 @@ public:
         return ret;
     }
 
+    [[nodiscard]] std::size_t getSize() {
+        accessToSnake.acquire();
+        auto ret = segments.size();
+        accessToSnake.release();
+        return ret;
+    }
+
     [[nodiscard]] bool wallCollision(std::pair<int, int> wallTopLeft, std::pair<int, int> wallBotRight) {
         accessToSnake.acquire();
         auto ret = SnakeBase::wallCollision(wallTopLeft, wallBotRight);

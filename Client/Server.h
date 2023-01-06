@@ -25,8 +25,8 @@ public:
         socket.disconnect();
     }
     bool connect() {
-        sf::Socket::Status status = socket.connect(ip, port, sf::seconds(2));
-        //sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(2));
+        //sf::Socket::Status status = socket.connect(ip, port, sf::seconds(2));
+        sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(2));
         switch (status) {
             case sf::Socket::Done:
                 std::cout << "connect Done" << std::endl;

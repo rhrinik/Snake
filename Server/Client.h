@@ -15,8 +15,18 @@ class Client {
     std::unique_ptr<std::jthread> thread;
     bool continueReceivingData;
     GameSpace::Player player{GameSpace::Player1};
+    bool sendDataThisTime{false};
     //std::mutex startStop;
 public:
+    void dataSent() {
+        sendDataThisTime = true;
+    }
+    void canSendMore() {
+        sendDataThisTime = false;
+    };
+    [[nodiscard]] bool alreadySent() const {
+        return sendDataThisTime;
+    }
     ~Client() {
         socket->disconnect();
     }
@@ -73,7 +83,7 @@ public:
                 socket->disconnect();
                 return;
             }
-            f(DataFromClient::fromPacket(packet),*this);
+            f(DataFromClient::fromPacket(packet), *this);
         }
     }
     void waitForOk() {

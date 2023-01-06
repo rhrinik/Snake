@@ -11,6 +11,10 @@ public:
     enum Direction {
         Up, Down, Left, Right
     };
+    inline static std::map<Direction, std::string> const directionStrs =            {{Up,    "Up"},
+                                                                                     {Down,  "Down"},
+                                                                                     {Left,  "Left"},
+                                                                                     {Right, "Right"}};
 protected:
     Direction direction{Right};
     std::vector<std::pair<int, int>> segments;
@@ -48,7 +52,9 @@ public:
     [[nodiscard]] std::vector<std::pair<int, int>> const &getSegments() const {
         return segments;
     }
-
+    [[nodiscard]] std::size_t getSize() const {
+        return segments.size();
+    }
     [[nodiscard]] bool selfCollision() const {
         return segments.size() > 4 &&
                std::ranges::any_of(segments | std::views::drop(3), [&](auto const &s) { return s == segments[0]; });

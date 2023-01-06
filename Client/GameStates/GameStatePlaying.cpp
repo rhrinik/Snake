@@ -1,6 +1,8 @@
 #include "GameStatePlaying.h"
 
 GameState::States GameStatePlaying::runState(States previous) {
+    if (previous == Menu)
+        init();
     if (previous == SelectIPAndPort)
         init();
 
@@ -11,6 +13,9 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 GameState::States GameStatePlaying::updateState() {
+    server.sendData(finalDirection);
+    snake.setDirection(finalDirection);
+
     DataFromServer data = server.receiveData();
     switch (data.getSnakeState()) {
         case DataFromServer::BothEat:
@@ -68,23 +73,19 @@ void GameStatePlaying::initState() {
 }
 
 void GameStatePlaying::onKeyUp() {
-    server.sendData({Snake::Direction::Up});
-    snake.setDirection(Snake::Direction::Up);
+    finalDirection = Snake::Direction::Up;
 }
 
 void GameStatePlaying::onKeyDown() {
-    server.sendData({Snake::Direction::Down});
-    snake.setDirection(Snake::Direction::Down);
+    finalDirection = Snake::Direction::Down;
 }
 
 void GameStatePlaying::onKeyLeft() {
-    server.sendData({Snake::Direction::Left});
-    snake.setDirection(Snake::Direction::Left);
+    finalDirection = Snake::Direction::Left;
 }
 
 void GameStatePlaying::onKeyRight() {
-    server.sendData({Snake::Direction::Right});
-    snake.setDirection(Snake::Direction::Right);
+    finalDirection = Snake::Direction::Right;
 }
 
 void GameStatePlaying::onKeyEnter() {

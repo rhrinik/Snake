@@ -20,6 +20,7 @@ class GameStatePlaying : public GameState {
     Food food{{8,4},{100, 225, 50}};
     Snake snake2{{4,4}, {65,105,225}};
     Food food2{{8,4},{65,105,225}};
+    Snake::Direction finalDirection{Snake::Direction::Right};
 public:
     GameStatePlaying(Window &wnd, Graphics &gfx, Server& server) : GameState(wnd, gfx), server(server) {}
 
