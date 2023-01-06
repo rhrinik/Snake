@@ -73,7 +73,7 @@ public:
         if (snake1crash && snake2crash) {
             if (snake.getSize() == snake2.getSize())
                 return Both;
-            if (snake.getSize() > snake2.getSize()) {
+            if (snake.getSize() < snake2.getSize()) {
                 return Player1;
             }
             return Player2;
