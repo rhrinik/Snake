@@ -14,7 +14,7 @@ public:
     Window() = default;
     void createWindow(int width, int height, std::string const& title) {
         windowClosed = false;
-        wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title);
+        wnd = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close);
     }
     [[nodiscard]] std::pair<int,int> getSize() const {
         return {wnd->getSize().x,wnd->getSize().y};
