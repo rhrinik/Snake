@@ -9,6 +9,7 @@ class GameStateWin : public GameState {
     void initState() override;
     Font font;
     Text title;
+    bool init{false};
 public:
     GameStateWin(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
     void onKeyEnter() override;
