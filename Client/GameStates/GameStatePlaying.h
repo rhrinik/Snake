@@ -17,7 +17,7 @@ class GameStatePlaying : public GameState {
     Stopwatch stopwatch;
     Server server;
     Snake snake{{4,4}, {100, 225, 50}};
-    Food food{{8,4},Color{100, 225, 50}};
+    Food food{{8,4},{100, 225, 50}};
     Snake snake2{{4,4}, {65,105,225}};
     Food food2{{8,4},{65,105,225}};
 public:

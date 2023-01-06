@@ -18,3 +18,17 @@ void Graphics::drawImage(Image &image) {
 void Graphics::drawText(Text &text) {
     wnd.wnd->draw(text.text);
 }
+
+void Graphics::drawRectangle(std::pair<int, int> topLeftPoint, std::pair<int, int> bottomRightPoint, Color color) {
+    sf::RectangleShape shape({static_cast<float>(bottomRightPoint.first-topLeftPoint.first), static_cast<float>(bottomRightPoint.second - topLeftPoint.second)});
+    shape.setPosition({static_cast<float>(topLeftPoint.first),static_cast<float>(topLeftPoint.second)});
+    shape.setFillColor(sf::Color(color.r(), color.g(), color.b()));
+    wnd.wnd->draw(shape);
+}
+
+void Graphics::drawCircle(std::pair<int, int> topLeftPoint, int radius, Color color) {
+    sf::CircleShape shape(static_cast<float>(radius));
+    shape.setPosition(static_cast<float>(topLeftPoint.first), static_cast<float>(topLeftPoint.second));
+    shape.setFillColor(sf::Color(color.r(), color.g(), color.b()));
+    wnd.wnd->draw(shape);
+}
