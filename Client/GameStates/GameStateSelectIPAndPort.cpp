@@ -1,8 +1,12 @@
 #include "GameStateSelectIPAndPort.h"
 
 GameState::States GameStateSelectIPAndPort::runState(GameState::States previous) {
-    if (previous == Menu)
+    if (previous == Menu && !initPass) {
         init();
+        restart();
+    }
+    if (previous == Menu)
+        restart();
 
     draw();
     return nextState;
@@ -24,6 +28,7 @@ void GameStateSelectIPAndPort::drawState() {
 }
 
 void GameStateSelectIPAndPort::initState() {
+    initPass = true;
     ipSelected = false;
     input = true;
     nextState = SelectIPAndPort;
@@ -116,4 +121,12 @@ void GameStateSelectIPAndPort::onBackSpace() {
         if (!inputPort.getString().empty())
             --inputPort;
     }
+}
+
+void GameStateSelectIPAndPort::restart() {
+    numberPos = 0;
+    numberCounts = {0,0,0,0};
+    ipSelected = false;
+    input = true;
+    nextState = SelectIPAndPort;
 }

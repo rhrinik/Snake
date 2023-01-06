@@ -23,10 +23,12 @@ class GameStateSelectIPAndPort : public GameState {
     std::vector<int> numberCounts;
     bool ipSelected{false};
     bool input{false};
+    bool initPass{false};
 public:
     GameStateSelectIPAndPort(Window &wnd, Graphics &gfx, std::shared_ptr<GameStateMenu> menu, Server& server)
         : GameState(wnd, gfx), menu(std::move(menu)), server(server), numberCounts(4,0) {}
     void onKeyEnter() override;
     void onBackSpace() override;
     void onTextEntered(char c) override;
+    void restart();
 };
