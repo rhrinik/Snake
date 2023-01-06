@@ -23,7 +23,7 @@ std::pair<bool, int> Application::checkPort(int argc, char *argv[]) {
             std::cerr << "Bad port number. Please select a valid port for server to listen on." << std::endl;
             return {false, 0};
         }
-        if (port > 65535) {
+        if (port > 65535 || port < 49152) {
             std::cerr << "Invalid port number." << std::endl;
             return {false, 0};
         }
