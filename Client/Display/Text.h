@@ -9,7 +9,7 @@ class Text {
 public:
     Text() = default;
     void setFont(const Font& newFont);
-    void setText(std::string const& str);
+    virtual void setText(std::string const& str);
     void setSize(std::size_t size);
     void setOutlineColor(Color color);
     void setOutlineSize(std::size_t size);

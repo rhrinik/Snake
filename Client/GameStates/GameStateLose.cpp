@@ -18,7 +18,7 @@ GameState::States GameStateLose::updateState() {
 }
 
 void GameStateLose::drawState() {
-    gfx.drawImage(loseImage);
+    gfx.drawImage(loseImage, {1,1}, {0,0});
 }
 
 void GameStateLose::onKeyEnter() {

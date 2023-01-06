@@ -15,6 +15,7 @@ GameState::States GameStateMenu::runState(States previous) {
 
 void GameStateMenu::restart() {
     selected = Play;
+    input = true;
     selectionConfirmed = false;
 }
 
@@ -22,7 +23,9 @@ GameState::States GameStateMenu::updateState() {
     if (selectionConfirmed)
         switch (selected) {
             case Play:
-                return Playing;
+               // return Playing;
+                input = false;
+                return SelectIPAndPort;
             case Exit:
                 return End;
         }
@@ -30,7 +33,7 @@ GameState::States GameStateMenu::updateState() {
 }
 
 void GameStateMenu::drawState() {
-    gfx.drawImage(imageBackground);
+    gfx.drawImage(imageBackground,{1,1},{0,0});
     gfx.drawText(title);
     gfx.drawText(play);
     gfx.drawText(exit);
@@ -47,6 +50,7 @@ void GameStateMenu::drawState() {
 }
 
 void GameStateMenu::initState() {
+    restart();
     imageBackground.loadFromFile("../Client/Resources/dark-grey-background-texture.jpg");
 
     font.loadFontFromFile("../Client/Resources/font.otf");
@@ -75,13 +79,23 @@ void GameStateMenu::initState() {
 }
 
 void GameStateMenu::onKeyUp() {
+    if (!input)
+        return;
     selected = Play;
 }
 
 void GameStateMenu::onKeyDown() {
+    if (!input)
+        return;
     selected = Exit;
 }
 
 void GameStateMenu::onKeyEnter() {
+    if (!input)
+        return;
     selectionConfirmed = true;
+}
+
+void GameStateMenu::drawAsBackGround() {
+    drawState();
 }

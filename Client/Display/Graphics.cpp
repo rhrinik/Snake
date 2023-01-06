@@ -8,10 +8,11 @@ void Graphics::endFrame() {
     wnd.wnd->display();
 }
 
-void Graphics::drawImage(Image &image) {
+void Graphics::drawImage(Image &image, std::pair<float, float> sizeRelativeToScr, std::pair<float, float> position) {
+    image.sprite.setPosition(position.first,position.second);
     image.sprite.setScale(
-            static_cast<float>(wnd.wnd->getSize().x) / image.sprite.getLocalBounds().width,
-            static_cast<float>(wnd.wnd->getSize().y) / image.sprite.getLocalBounds().height);
+            static_cast<float>(wnd.wnd->getSize().x) / image.sprite.getLocalBounds().width * sizeRelativeToScr.first,
+            static_cast<float>(wnd.wnd->getSize().y) / image.sprite.getLocalBounds().height * sizeRelativeToScr.second);
     wnd.wnd->draw(image.sprite);
 }
 

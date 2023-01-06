@@ -9,11 +9,13 @@ void Game::run() {
 }
 
 void Game::init() {
-    states.emplace_back(std::make_unique<GameStateDummy>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStateDummy>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStatePlaying>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStateMenu>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStateLose>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStateWin>(wnd,gfx));
-    states.emplace_back(std::make_unique<GameStateDraw>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStateDummy>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStateDummy>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStatePlaying>(wnd,gfx,server));
+    auto menu = std::make_shared<GameStateMenu>(wnd,gfx);
+    states.emplace_back(menu);
+    states.emplace_back(std::make_shared<GameStateLose>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStateWin>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStateDraw>(wnd,gfx));
+    states.emplace_back(std::make_shared<GameStateSelectIPAndPort>(wnd,gfx,menu,server));
 }

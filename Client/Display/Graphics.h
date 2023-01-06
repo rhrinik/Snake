@@ -12,7 +12,7 @@ public:
     void beginFrame();
     void endFrame();
     void drawCircle(std::pair<int,int> topLeftPoint, int radius, Color color);
-    void drawImage(Image &image);
+    void drawImage(Image &image, std::pair<float, float> sizeRelativeToScr, std::pair<float, float> position);
     void drawText(Text &text);
     void drawRectangle(std::pair<int,int> topLeftPoint, std::pair<int,int> bottomRightPoint, Color color);
 };

@@ -17,6 +17,7 @@ class GameStateMenu : public GameState {
     Text exit;
     enum Selected { Play, Exit } selected{Play};
     bool selectionConfirmed{false};
+    bool input{false};
 public:
     void onKeyUp() override;
     void onKeyDown() override;
@@ -24,4 +25,5 @@ public:
     GameStateMenu(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
 
     void restart();
+    void drawAsBackGround();
 };

@@ -1,7 +1,7 @@
 #include "GameStatePlaying.h"
 
 GameState::States GameStatePlaying::runState(States previous) {
-    if (previous == Menu)
+    if (previous == SelectIPAndPort)
         init();
 
     auto state = update();

@@ -37,9 +37,17 @@ void Window::processEvents() {
                         for (auto& k : registeredObjects)
                             k.get().onKeyEnter();
                         break;
+                    case sf::Keyboard::BackSpace:
+                        for (auto& k : registeredObjects)
+                            k.get().onBackSpace();
+                        break;
                     default:
                         break;
                 }
+                break;
+            case sf::Event::TextEntered:
+                for (auto& k : registeredObjects)
+                    k.get().onTextEntered(static_cast<char>(event.text.unicode));
                 break;
             default:
                 break;

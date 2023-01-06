@@ -15,13 +15,13 @@ class GameStatePlaying : public GameState {
     void initState() override;
     void restart();
     Stopwatch stopwatch;
-    Server server;
+    Server& server;
     Snake snake{{4,4}, {100, 225, 50}};
     Food food{{8,4},{100, 225, 50}};
     Snake snake2{{4,4}, {65,105,225}};
     Food food2{{8,4},{65,105,225}};
 public:
-    GameStatePlaying(Window &wnd, Graphics &gfx) : GameState(wnd, gfx) {}
+    GameStatePlaying(Window &wnd, Graphics &gfx, Server& server) : GameState(wnd, gfx), server(server) {}
 
     void onKeyUp() override;
     void onKeyDown() override;
