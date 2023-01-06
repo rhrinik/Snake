@@ -2,7 +2,8 @@
 
 void GameStateWin::initState() {
     nextState = Win;
-    if (!init) {
+    if (!initPass) {
+        initPass = true;
         font.loadFontFromFile("../Client/Resources/font.otf");
 
         title.setFont(font);
