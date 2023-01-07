@@ -31,4 +31,5 @@ public:
     void onBackSpace() override;
     void onTextEntered(char c) override;
     void restart();
+    void drawAsBackGround();
 };

@@ -16,7 +16,19 @@ GameState::States GameStatePlaying::updateState() {
     server.sendData(finalDirection);
     snake.setDirection(finalDirection);
 
-    DataFromServer data = server.receiveData();
+    auto dataReceived = server.receiveData();
+    switch (dataReceived.first) {
+        case sf::Socket::Disconnected:
+        case sf::Socket::Error:
+            nextState = Menu;
+            return Menu;
+        case sf::Socket::NotReady:
+        case sf::Socket::Partial:
+            return Playing;
+        case sf::Socket::Done:
+            break;
+    }
+    auto &data = dataReceived.second;
     switch (data.getSnakeState()) {
         case DataFromServer::BothEat:
             snake2.grow();
@@ -56,6 +68,8 @@ GameState::States GameStatePlaying::updateState() {
         case DataFromServer::Draw:
             server.okAndDisconnect();
             return Draw;
+        default:
+            break;
     }
     return Playing;
 }
@@ -68,7 +82,6 @@ void GameStatePlaying::drawState() {
 }
 
 void GameStatePlaying::initState() {
-    server.connect();
     restart();
 }
 

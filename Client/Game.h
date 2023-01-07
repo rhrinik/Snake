@@ -9,6 +9,7 @@
 #include "GameStates/GameStateWin.h"
 #include "GameStates/GameStateDraw.h"
 #include "GameStates/GameStateSelectIPAndPort.h"
+#include "GameStates/GameStateTryToConnect.h"
 
 class Game {
     Graphics& gfx;

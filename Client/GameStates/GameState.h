@@ -7,7 +7,7 @@ public:
     GameState(Window &wnd, Graphics &gfx) : wnd(wnd), gfx(gfx), nextState(End) {
         wnd.registerObject(*this);
     }
-    enum States { Start, End, Playing, Menu, Lose, Win, Draw, SelectIPAndPort };
+    enum States { Start, End, Playing, Menu, Lose, Win, Draw, SelectIPAndPort, TryToConnect };
     [[nodiscard]] States run(States previous);
     States update();
     void draw();

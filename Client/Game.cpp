@@ -17,5 +17,7 @@ void Game::init() {
     states.emplace_back(std::make_shared<GameStateLose>(wnd,gfx));
     states.emplace_back(std::make_shared<GameStateWin>(wnd,gfx));
     states.emplace_back(std::make_shared<GameStateDraw>(wnd,gfx));
-    states.emplace_back(std::make_shared<GameStateSelectIPAndPort>(wnd,gfx,menu,server));
+    auto selectIpAndPort = std::make_shared<GameStateSelectIPAndPort>(wnd,gfx,menu,server);
+    states.emplace_back(selectIpAndPort);
+    states.emplace_back(std::make_shared<GameStateTryToConnect>(wnd,gfx,selectIpAndPort,server));
 }

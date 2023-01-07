@@ -4,8 +4,7 @@ GameState::States GameStateSelectIPAndPort::runState(GameState::States previous)
     if (previous == Menu && !initPass) {
         init();
         restart();
-    }
-    if (previous == Menu)
+    } else if (previous != SelectIPAndPort)
         restart();
 
     draw();
@@ -72,7 +71,7 @@ void GameStateSelectIPAndPort::onKeyEnter() {
         server.setIp(inputIp.getText());
     } else {
         server.setPort(std::stoi(inputPort.getText()));
-        nextState = Playing;
+        nextState = TryToConnect;
         input = false;
     }
 }
@@ -131,4 +130,8 @@ void GameStateSelectIPAndPort::restart() {
     inputIp.clear();
     inputPort.clear();
     nextState = SelectIPAndPort;
+}
+
+void GameStateSelectIPAndPort::drawAsBackGround() {
+    drawState();
 }

@@ -35,6 +35,7 @@ void ServerStateWaitingForPlayers::connectPlayers() {
     clients.emplace_back();
     clients.front().waitToConnect(listener,selector);
     clients.back().waitToConnect(listener,selector);
+    std::cout << "Waiting for players to join.... (2/2)" << std::endl;
 }
 
 void ServerStateWaitingForPlayers::restart() {
@@ -43,11 +44,25 @@ void ServerStateWaitingForPlayers::restart() {
     clients.emplace_back();
     bool connected1 = false;
     bool connected2 = false;
+    int playersConnectedBefore{-1};
     while (!connected1 || !connected2) {
-        if (!connected1)
+        int playersConnected = (connected1 ? 1 : 0) + (connected2 ? 1 : 0);
+        if (playersConnectedBefore != playersConnected) {
+            playersConnectedBefore = playersConnected;
+            std::cout << "Waiting for players to join.... ("<< playersConnected <<"/2)" << std::endl;
+        }
+        if (!connected1) {
             connected1 = clients.front().waitToConnect(listener, selector);
-        if (!connected2)
+        }
+        else {
+            connected1 = clients.front().isNotDisconnected();
+        }
+        if (!connected2) {
             connected2 = clients.back().waitToConnect(listener, selector);
+        }
+        else {
+            connected2 = clients.back().isNotDisconnected();
+        }
         {
             std::lock_guard<std::mutex> lock(userEndAccess);
             if (!userEnd)
@@ -58,6 +73,9 @@ void ServerStateWaitingForPlayers::restart() {
             }
         }
     }
+    std::cout << "Waiting for players to join.... (2/2)" << std::endl;
+    clients.front().sendData({DataFromServer::SnakeState::OtherReady});
+    clients.back().sendData({DataFromServer::SnakeState::OtherReady});
 }
 
 ServerStateWaitingForPlayers::~ServerStateWaitingForPlayers() {

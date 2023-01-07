@@ -27,15 +27,23 @@ public:
     [[nodiscard]] bool alreadySent() const {
         return sendDataThisTime;
     }
+    bool isNotDisconnected() {
+        std::size_t size;
+        bool blocks = socket->isBlocking();
+        socket->setBlocking(false);
+        auto status = socket->receive(&size, 0, size) != sf::Socket::Disconnected;
+        socket->setBlocking(blocks);
+        return status;
+    }
     ~Client() {
         socket->disconnect();
     }
     Client() : socket(std::make_shared<sf::TcpSocket>()) {}
     Client(Client &&client) noexcept : socket(client.socket), thread(std::move(client.thread)) {}
     bool waitToConnect(sf::TcpListener& listener, sf::SocketSelector& selector) {
-        selector.wait(sf::seconds(0.5));
+        /*selector.wait(sf::seconds(0.5));
         if (!selector.isReady(listener))
-            return false;
+            return false;*/
         sf::Socket::Status status = listener.accept(*socket);
         return status == sf::Socket::Done;
     }

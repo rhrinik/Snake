@@ -6,6 +6,16 @@ GameState::States GameStateMenu::runState(States previous) {
     if (previous == Lose || previous == Win || previous == Draw) {
         restart();
     }
+    if (previous == TryToConnect) {
+        restart();
+        connectFail.setText("Failed to connect to server.");
+        connectFailDraw = true;
+    }
+    if (previous == Playing) {
+        restart();
+        connectFail.setText("Lost connection to server.");
+        connectFailDraw = true;
+    }
 
     auto state = update();
     draw();
@@ -14,6 +24,7 @@ GameState::States GameStateMenu::runState(States previous) {
 }
 
 void GameStateMenu::restart() {
+    connectFailDraw = false;
     selected = Play;
     input = true;
     selectionConfirmed = false;
@@ -24,7 +35,8 @@ GameState::States GameStateMenu::updateState() {
         switch (selected) {
             case Play:
                 input = false;
-                return Playing;
+                //return Playing;
+                connectFailDraw = false;
                 return SelectIPAndPort;
             case Exit:
                 return End;
@@ -37,6 +49,8 @@ void GameStateMenu::drawState() {
     gfx.drawText(title);
     gfx.drawText(play);
     gfx.drawText(exit);
+    if (connectFailDraw)
+        gfx.drawText(connectFail);
     switch (selected) {
         case Play:
             play.setOutlineSize(10);
@@ -76,6 +90,12 @@ void GameStateMenu::initState() {
     exitPosition.second += wnd.getSize().second/8;
     exit.setPosition(exitPosition);
     exit.setOutlineColor(Color(70,70,70));
+
+    connectFail.setFont(font);
+    connectFail.setText("Failed to connect to server.");
+    connectFail.setSize(50);
+    std::pair<int,int> pipPosition = (wnd.getSize() - connectFail.getSize()) / 2;
+    connectFail.setPosition(pipPosition + std::make_pair(0,wnd.getSize().second/3));
 }
 
 void GameStateMenu::onKeyUp() {

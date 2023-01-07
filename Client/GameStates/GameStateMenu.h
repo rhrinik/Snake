@@ -15,9 +15,11 @@ class GameStateMenu : public GameState {
     Text title;
     Text play;
     Text exit;
+    Text connectFail;
     enum Selected { Play, Exit } selected{Play};
     bool selectionConfirmed{false};
     bool input{false};
+    bool connectFailDraw{false};
 public:
     void onKeyUp() override;
     void onKeyDown() override;
