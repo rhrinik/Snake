@@ -5,6 +5,8 @@ GameState::States GameStatePlaying::runState(States previous) {
         init();
     if (previous == SelectIPAndPort)
         init();
+    if (previous == TryToConnect)
+        init();
 
     auto state = update();
     draw();
@@ -13,9 +15,6 @@ GameState::States GameStatePlaying::runState(States previous) {
 }
 
 GameState::States GameStatePlaying::updateState() {
-    server.sendData(finalDirection);
-    snake.setDirection(finalDirection);
-
     auto dataReceived = server.receiveData();
     switch (dataReceived.first) {
         case sf::Socket::Disconnected:
@@ -26,6 +25,7 @@ GameState::States GameStatePlaying::updateState() {
         case sf::Socket::Partial:
             return Playing;
         case sf::Socket::Done:
+            server.sendData(finalDirection);
             break;
     }
     auto &data = dataReceived.second;
@@ -40,6 +40,7 @@ GameState::States GameStatePlaying::updateState() {
             snake.move();
             snake2.setDirection(data.getOtherDirection());
             snake2.move();
+            snake.setDirection(finalDirection);
             return Playing;
         case DataFromServer::OtherEat:
             snake2.grow();
@@ -106,4 +107,6 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
+    snake.reset({4,4});
+    snake2.reset({4,4});
 }

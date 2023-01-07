@@ -62,6 +62,7 @@ void GameStateTryToConnect::initState() {
 }
 
 void GameStateTryToConnect::restart() {
+    server.setConnected(false);
     tryConnectFor.reset();
     input = true;
     nextState = TryToConnect;

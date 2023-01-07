@@ -31,8 +31,17 @@ public:
         std::cout << "disconnect() Disconnected" << std::endl;
         socket.disconnect();
     }
+    bool isNotDisconnected() {
+        std::size_t size;
+        bool blocks = socket.isBlocking();
+        socket.setBlocking(false);
+        auto status = socket.receive(&size, 0, size) == sf::Socket::Done;
+        socket.setBlocking(blocks);
+        return status;
+    }
     bool connect() {
         //sf::Socket::Status status = socket.connect(ip, port, sf::seconds(0.01));
+        socket.setBlocking(true);
         sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(0.01));
         switch (status) {
             case sf::Socket::Done:

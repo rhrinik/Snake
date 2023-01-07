@@ -72,20 +72,32 @@ public:
     void stopReceivingData() {
         //std::lock_guard<std::mutex> lock(startStop);
         //continueReceivingData = false;
+        socket->disconnect();
     }
     void receiveData(std::function<void(DataFromClient const&,Client& client)> const& f) {
         //std::lock_guard<std::mutex> lock(startStop);
         while (continueReceivingData) {
             sf::Packet packet;
             //auto status = receiveWithTimeout(socket, packet, 10);
+            socket->setBlocking(false);
             auto status = socket->receive(packet);
             /*if (!status.second) {
                 socket->disconnect();
                 return;
             }*/
             //if (status.first == sf::TcpSocket::Status::Disconnected)
-            if (status == sf::TcpSocket::Status::Disconnected)
-                return;
+            switch (status) {
+                case sf::Socket::Done:
+                    break;
+                case sf::Socket::NotReady:
+                case sf::Socket::Partial:
+                    continue;
+                case sf::Socket::Disconnected:
+                case sf::Socket::Error:
+                    return;
+            }
+            /*if (status == sf::TcpSocket::Status::Disconnected)
+                return;*/
             DataFromClient dataFromClient = DataFromClient::fromPacket(packet);
             if (dataFromClient.getOk()) {
                 socket->disconnect();

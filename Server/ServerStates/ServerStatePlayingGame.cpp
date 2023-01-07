@@ -21,6 +21,9 @@ ServerState::States ServerStatePlayingGame::updateState() {
         for (auto &client : clients)
             client.canSendMore();
     }
+    if (nextState == WaitingForPlayers)
+        for (auto &client : clients)
+            client.waitForOk();
     return nextState;
 }
 
@@ -138,8 +141,8 @@ void ServerStatePlayingGame::sendPlayerInfo() {
 }
 
 void ServerStatePlayingGame::endGame() {
-    for (auto &client : clients)
-        client.waitForOk();
+    /*for (auto &client : clients)
+        client.stopReceivingData();*/
     nextState = WaitingForPlayers;
 }
 
