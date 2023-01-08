@@ -17,13 +17,20 @@ protected:
     TileState& getTileAt(std::pair<int,int> at) {
         return tiles[getIndexFromCoords(at)];
     }
+    [[nodiscard]] bool isValid(std::pair<int,int> at) {
+        return getIndexFromCoords(at) >=0 && getIndexFromCoords(at) < tiles.size();
+    }
     void setEmpty(std::pair<int,int> at) {
+        if (!isValid(at))
+            return;
         if (getTileAt(at) == Empty)
             return;
         getTileAt(at) = Empty;
         emptyTiles.emplace_back(getIndexFromCoords(at));
     }
     void setNonEmpty(std::pair<int,int> at) {
+        if (!isValid(at))
+            return;
         if (getTileAt(at) == NonEmpty)
             return;
         getTileAt(at) = NonEmpty;
