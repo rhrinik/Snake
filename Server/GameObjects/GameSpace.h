@@ -15,7 +15,7 @@ private:
     std::mutex tileAccess;
     std::map<Player, Snake&> snakesMap = {{Player1, snake}, {Player2, snake2}};
     std::map<Player, FoodBase&> foodMap = {{Player1, food}, {Player2, food2}};
-    std::map<Player, Snake::Direction> startMap = {{Player1, Snake::Right}, {Player2, Snake::Left}};
+    std::map<Player, Snake::Direction> startMap = {{Player1, Snake::Right}, {Player2, Snake::Right}};
     inline static std::mt19937 rng{std::random_device{}()};
 public:
     GameSpace(const std::pair<int, int> &space) : GameSpaceBase(space) {}
@@ -38,7 +38,7 @@ public:
     void resetSnake(std::pair<int,int> pos,Player player) {
         std::lock_guard<std::mutex> lock(tileAccess);
         GameSpaceBase::resetSnake(snakesMap.at(player), pos);
-        snakesMap.at(player).setDirection(startMap[player]);
+        snakesMap.at(player).resetDirection(startMap[player]);
     }
     void growSnake(Player player) {
         GameSpaceBase::growSnake(snakesMap.at(player));

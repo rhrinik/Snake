@@ -36,6 +36,12 @@ public:
         accessToSnake.release();
     }
 
+    void resetDirection(Direction newDirection) override {
+        accessToSnake.acquire();
+        SnakeBase::resetDirection(newDirection);
+        accessToSnake.release();
+    }
+
     [[nodiscard]] std::vector<std::pair<int, int>> const&getSegments() {
         accessToSnake.acquire();
         auto& ret = SnakeBase::getSegments();

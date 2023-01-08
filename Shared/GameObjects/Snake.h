@@ -49,6 +49,10 @@ public:
         direction = newDirection;
     }
 
+    virtual void resetDirection(Direction newDirection) {
+        direction = newDirection;
+    }
+
     [[nodiscard]] std::vector<std::pair<int, int>> const &getSegments() const {
         return segments;
     }

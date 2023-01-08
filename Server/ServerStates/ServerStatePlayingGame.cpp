@@ -14,6 +14,8 @@ ServerState::States ServerStatePlayingGame::updateState() {
 
     {
         std::lock_guard<std::mutex> lock(accessToSend);
+        putSnakesDone = true;
+        readyToReceive.notify_all();
         gameSpace.moveSnake(GameSpace::Player1);
         gameSpace.moveSnake(GameSpace::Player2);
 
@@ -29,19 +31,20 @@ ServerState::States ServerStatePlayingGame::updateState() {
 
 void ServerStatePlayingGame::sendPutSnake(Client &client, GameSpace::Player player) {
     client.sendData({DataFromServer::PutSnakes,
-                     Snake::Direction::Right,
+                     SnakeBase::Direction::Right,
                      gameSpace.getSnakeHead(player),
                      gameSpace.getSnakeHead(gameSpace.otherPlayer(player))});
 }
 
 void ServerStatePlayingGame::sendPutFood(Client &client, GameSpace::Player player) {
     client.sendData({DataFromServer::PutFood,
-                     Snake::Direction::Right,
+                     SnakeBase::Direction::Right,
                      gameSpace.getFoodCoords(player),
                      gameSpace.getFoodCoords(gameSpace.otherPlayer(player))});
 }
 
 void ServerStatePlayingGame::initState() {
+    putSnakesDone = false;
     gameSpace.resetSnake({3,3}, GameSpace::Player1);
     gameSpace.resetFood({1,1}, GameSpace::Player1);
 
@@ -104,7 +107,8 @@ void ServerStatePlayingGame::sendMoveSnakes() {
 }
 
 void ServerStatePlayingGame::receivePlayerInput(DataFromClient const& data, Client& client) {
-    std::lock_guard<std::mutex> lock(accessToSend);
+    std::unique_lock<std::mutex> lock(accessToSend);
+    readyToReceive.wait(lock,[&](){return putSnakesDone;});
     if (client.alreadySent())
         return;
     client.dataSent();

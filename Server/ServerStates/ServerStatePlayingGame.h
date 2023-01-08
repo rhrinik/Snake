@@ -6,6 +6,7 @@
 #include "../Client.h"
 #include "../GameObjects/GameSpace.h"
 #include <thread>
+#include <condition_variable>
 
 class ServerStatePlayingGame : public ServerState {
     std::vector<Client>& clients;
@@ -23,6 +24,8 @@ class ServerStatePlayingGame : public ServerState {
     void sendPutFood(Client &client, GameSpace::Player player);
     void sendPlayerInfo();
     std::mutex accessToSend;
+    std::condition_variable readyToReceive;
+    bool putSnakesDone{false};
 public:
     ServerStatePlayingGame(std::vector<Client> &clients)
             : clients(clients) {}

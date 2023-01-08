@@ -107,4 +107,7 @@ void GameStatePlaying::onKeyEnter() {
 
 void GameStatePlaying::restart() {
     stopwatch.reset();
+    snake.resetDirection(Snake::Right);
+    snake2.resetDirection(Snake::Right);
+    finalDirection = Snake::Right;
 }

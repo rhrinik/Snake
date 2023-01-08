@@ -70,6 +70,8 @@ void GameStateSelectIPAndPort::onKeyEnter() {
         ipSelected = true;
         server.setIp(inputIp.getText());
     } else {
+        if (inputPort.getString().empty())
+            return;
         server.setPort(std::stoi(inputPort.getText()));
         nextState = TryToConnect;
         input = false;
