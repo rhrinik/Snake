@@ -71,21 +71,21 @@ void GameStateMenu::initState() {
 
     title.setFont(font);
     title.setText("SNAKE");
-    title.setSize(300);
+    title.setSize(180);
     std::pair<int,int> titlePosition = (wnd.getSize() - title.getSize()) / 2;
     titlePosition.second -= wnd.getSize().second/4;
     title.setPosition(titlePosition);
 
     play.setFont(font);
     play.setText("Play");
-    play.setSize(150);
+    play.setSize(90);
     std::pair<int,int> playPosition = (wnd.getSize() - play.getSize()) / 2;
     play.setPosition(playPosition);
     play.setOutlineColor(Color(70,70,70));
 
     exit.setFont(font);
     exit.setText("Exit");
-    exit.setSize(150);
+    exit.setSize(90);
     std::pair<int,int> exitPosition = (wnd.getSize() - exit.getSize()) / 2;
     exitPosition.second += wnd.getSize().second/8;
     exit.setPosition(exitPosition);
@@ -93,7 +93,7 @@ void GameStateMenu::initState() {
 
     connectFail.setFont(font);
     connectFail.setText("Failed to connect to server.");
-    connectFail.setSize(50);
+    connectFail.setSize(30);
     std::pair<int,int> pipPosition = (wnd.getSize() - connectFail.getSize()) / 2;
     connectFail.setPosition(pipPosition + std::make_pair(0,wnd.getSize().second/3));
 }

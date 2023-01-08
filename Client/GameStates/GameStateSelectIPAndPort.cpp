@@ -35,27 +35,27 @@ void GameStateSelectIPAndPort::initState() {
 
     promptIp.setFont(font);
     promptIp.setText("Enter IP: ");
-    promptIp.setSize(50);
+    promptIp.setSize(30);
     std::pair<int,int> pipPosition = (wnd.getSize() - promptIp.getSize()) / 2;
     pipPosition.first += wnd.getSize().second/4;
     promptIp.setPosition(pipPosition);
 
     promptPort.setFont(font);
     promptPort.setText("Enter Port: ");
-    promptPort.setSize(50);
+    promptPort.setSize(30);
     std::pair<int,int> pPortPosition = (wnd.getSize() - promptPort.getSize()) / 2;
     pPortPosition.first += wnd.getSize().second/4;
     promptPort.setPosition(pPortPosition);
 
     inputIp.setFont(font);
     inputIp.setText("Enter IP: ");
-    inputIp.setSize(50);
+    inputIp.setSize(30);
     inputIp.setPosition(pipPosition + std::make_pair(promptIp.getSize().first,0));
     inputIp.setText({});
 
     inputPort.setFont(font);
     inputPort.setText("Enter Port: ");
-    inputPort.setSize(50);
+    inputPort.setSize(30);
     inputPort.setPosition(pPortPosition + std::make_pair(promptPort.getSize().first,0));
     inputPort.setText({});
 }

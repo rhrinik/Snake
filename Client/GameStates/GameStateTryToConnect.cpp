@@ -56,7 +56,7 @@ void GameStateTryToConnect::initState() {
 
     connectionStatusText.setFont(font);
     connectionStatusText.setText("Trying to connect to server...");
-    connectionStatusText.setSize(50);
+    connectionStatusText.setSize(30);
     std::pair<int,int> pipPosition = (wnd.getSize() - connectionStatusText.getSize()) / 2;
     connectionStatusText.setPosition(pipPosition + std::make_pair(0,wnd.getSize().second/3));
 }

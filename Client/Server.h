@@ -40,9 +40,9 @@ public:
         return status;
     }
     bool connect() {
-        //sf::Socket::Status status = socket.connect(ip, port, sf::seconds(0.01));
         socket.setBlocking(true);
-        sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(0.01));
+        sf::Socket::Status status = socket.connect(ip, port, sf::seconds(0.01));
+        //sf::Socket::Status status = socket.connect("127.0.0.1", 53000, sf::seconds(0.01));
         switch (status) {
             case sf::Socket::Done:
                 std::cout << "connect Done" << std::endl;

@@ -13,7 +13,7 @@ class ServerStatePlayingGame : public ServerState {
     States runState(States previous) override;
     States updateState() override;
     void initState() override;
-    GameSpace gameSpace{{50,37}};
+    GameSpace gameSpace{{30,20}};
     Stopwatch stopwatchGameSpeed;
     void receivePlayerInput(DataFromClient const& data, Client& client);
     void sendMoveSnakes();

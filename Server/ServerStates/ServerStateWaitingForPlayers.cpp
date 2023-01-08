@@ -39,6 +39,7 @@ void ServerStateWaitingForPlayers::connectPlayers() {
 }
 
 void ServerStateWaitingForPlayers::restart() {
+    std::cout << "Starting new game...." << std::endl;
     clients.clear();
     clients.emplace_back();
     clients.emplace_back();

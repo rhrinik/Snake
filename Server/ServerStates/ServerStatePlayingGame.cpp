@@ -46,9 +46,9 @@ void ServerStatePlayingGame::sendPutFood(Client &client, GameSpace::Player playe
 void ServerStatePlayingGame::initState() {
     putSnakesDone = false;
     gameSpace.resetSnake({3,3}, GameSpace::Player1);
-    gameSpace.resetFood({1,1}, GameSpace::Player1);
+    gameSpace.resetFood({4,4}, GameSpace::Player1);
 
-    gameSpace.resetSnake({20,20}, GameSpace::Player2);
+    gameSpace.resetSnake({9,9}, GameSpace::Player2);
     gameSpace.resetFood({10,10}, GameSpace::Player2);
 
     sendPutSnake(clients[1],GameSpace::Player1);
@@ -121,6 +121,7 @@ void ServerStatePlayingGame::sendPlayerInfo() {
     if (crash == GameSpace::Both) {
         sendDraw(clients.back(),GameSpace::Player1);
         sendDraw(clients.front(),GameSpace::Player2);
+        std::cout << "Game ended in a draw." << std::endl;
         endGame();
         return;
     }
@@ -128,6 +129,7 @@ void ServerStatePlayingGame::sendPlayerInfo() {
     if ((crash == GameSpace::Player1) || gameSpace.checkCollisions(GameSpace::Player1)) {
         sendCrash(clients.back(),GameSpace::Player1);
         sendWin(clients.front(),GameSpace::Player2);
+        std::cout << "Game ended, player 2 won." << std::endl;
         endGame();
         return;
     }
@@ -135,6 +137,7 @@ void ServerStatePlayingGame::sendPlayerInfo() {
     if ((crash == GameSpace::Player2) || gameSpace.checkCollisions(GameSpace::Player2)) {
         sendCrash(clients.front(),GameSpace::Player2);
         sendWin(clients.back(),GameSpace::Player1);
+        std::cout << "Game ended, player 1 won." << std::endl;
         endGame();
         return;
     }
