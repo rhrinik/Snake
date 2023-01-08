@@ -4,14 +4,16 @@ SRCSERVERDIR := Server
 SRCSHAREDDIR := Shared
 CC := g++.exe
 CPPFLAGS := -std=c++23 -MMD
-INCLUDES := -I../SFML-2.5.1/include/
-LIBS := -L../SFML-2.5.1/lib/
+INCLUDES := -ISFML-2.5.1/include/
+LIBS := -LSFML-2.5.1/lib/
 LDLIBS := -lm -lsfml-main -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDLIBSSTATIC := -lm -DSFML_STATIC -lwinmm -lsfml-system-s -lws2_32 -lsfml-network-s -lopengl32 -lgdi32 -lsfml-window-s -lfreetype -lsfml-graphics-s -lsfml-main
 .PHONY: clean server client
 CLIENTOBJS = $(BUILDDIR)/Client/Application.o $(BUILDDIR)/Client/Display/Color.o $(BUILDDIR)/Client/Display/Font.o $(BUILDDIR)/Client/Display/Graphics.o $(BUILDDIR)/Client/Display/Image.o $(BUILDDIR)/Client/Display/Input.o $(BUILDDIR)/Client/Display/Text.o $(BUILDDIR)/Client/Display/Window.o $(BUILDDIR)/Client/Game.o $(BUILDDIR)/Client/GameObjects/Food.o $(BUILDDIR)/Client/GameObjects/GameSpace.o $(BUILDDIR)/Client/GameObjects/Snake.o $(BUILDDIR)/Client/GameStates/GameState.o $(BUILDDIR)/Client/GameStates/GameStateDraw.o $(BUILDDIR)/Client/GameStates/GameStateDummy.o $(BUILDDIR)/Client/GameStates/GameStateLose.o $(BUILDDIR)/Client/GameStates/GameStateMenu.o $(BUILDDIR)/Client/GameStates/GameStatePlaying.o $(BUILDDIR)/Client/GameStates/GameStateSelectIPAndPort.o $(BUILDDIR)/Client/GameStates/GameStateTryToConnect.o $(BUILDDIR)/Client/GameStates/GameStateWin.o $(BUILDDIR)/Client/main.o $(BUILDDIR)/Client/Server.o $(BUILDDIR)/Client/Utility/KeyPresses.o
 SERVEROBJS = $(BUILDDIR)/Server/Application.o $(BUILDDIR)/Server/Client.o $(BUILDDIR)/Server/Game.o $(BUILDDIR)/Server/GameObjects/GameSpace.o $(BUILDDIR)/Server/GameObjects/Snake.o $(BUILDDIR)/Server/main.o $(BUILDDIR)/Server/ServerStates/ServerState.o $(BUILDDIR)/Server/ServerStates/ServerStatePlayingGame.o $(BUILDDIR)/Server/ServerStates/ServerStateWaitingForPlayers.o
 SHAREDOBJS = $(BUILDDIR)/Shared/DataFromClient.o $(BUILDDIR)/Shared/DataFromServer.o $(BUILDDIR)/Shared/GameObjects/Food.o $(BUILDDIR)/Shared/GameObjects/GameSpaceBase.o $(BUILDDIR)/Shared/GameObjects/Snake.o $(BUILDDIR)/Shared/Utility/Stopwatch.o
+
+all: client.exe server.exe libs
 
 $(BUILDDIR):
 	mkdir -p $@
@@ -72,7 +74,6 @@ client.exe: $(CLIENTOBJS) $(SHAREDOBJS)
 	$(CC) $(CPPFLAGS) -o $(BUILDDIR)/$@ $^ $(LIBS) $(LDLIBS) -mwindows
 server.exe:	$(SERVEROBJS) $(SHAREDOBJS)
 	$(CC) $(CPPFLAGS) -o $(BUILDDIR)/$@ $^ $(LIBS) $(LDLIBS)
-all: client.exe server.exe libs
 	
 libs:
 	cp DLL/* $(BUILDDIR)/
